@@ -1,20 +1,63 @@
 package icity_sdk
 
 import (
+	"fmt"
+	"io"
+	"log"
 	"net/http"
+	"net/http/cookiejar"
 	"net/url"
+	"strings"
 
-	"github.com/WingLim/icity-sdk/constant"
+	"github.com/PuerkitoBio/goquery"
+	"github.com/WingLim/icity-sdk/constant/path"
 )
 
-func (user *User) get(path string) (resp *http.Response, err error) {
-	fullUrl := constant.HOME + path
-	return user.client.Get(fullUrl)
+const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
+
+func (user *User) do(req *http.Request) (resp *http.Response, err error) {
+	req.Header.Set("User-Agent", userAgent)
+	return user.client.Do(req)
 }
 
-func (user *User) postForm(path string, data url.Values) (resp *http.Response, err error) {
-	fullUrl := constant.HOME + path
-	return user.client.PostForm(fullUrl, data)
+func (user *User) get(urlPath string) (resp *http.Response, err error) {
+	fullUrl := path.HOME + urlPath
+	req, err := http.NewRequest(http.MethodGet, fullUrl, nil)
+	if err != nil {
+		return
+	}
+	return user.do(req)
+}
+
+func (user *User) post(urlPath, contentType string, body io.Reader) (resp *http.Response, err error) {
+	fullUrl := path.HOME + urlPath
+	req, err := http.NewRequest(http.MethodPost, fullUrl, body)
+	if err != nil {
+		return
+	}
+	return user.do(req)
+}
+
+func (user *User) postForm(urlPath string, data url.Values) (resp *http.Response, err error) {
+	return user.post(urlPath, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+}
+
+func (user *User) getWithDoc(urlPath string) (*goquery.Document, error) {
+	resp, err := user.get(urlPath)
+	if err != nil {
+		return nil, err
+	}
+	defer closeBody(resp.Body)
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("status code error: %d %s", resp.StatusCode, resp.Status)
+	}
+
+	doc, err := goquery.NewDocumentFromReader(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	return doc, nil
 }
 
 func (user *User) initClient() {
