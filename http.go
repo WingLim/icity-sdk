@@ -35,6 +35,7 @@ func (user *User) post(urlPath, contentType string, body io.Reader) (resp *http.
 	if err != nil {
 		return
 	}
+	req.Header.Set("Referer", path.HOME+"/")
 	return user.do(req)
 }
 
