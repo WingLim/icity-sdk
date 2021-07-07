@@ -18,7 +18,7 @@ func (user *User) getLoginToken() string {
 		return ""
 	}
 
-	if token, ok := doc.Find(selector.LOGINTOKEN).Attr("value"); ok {
+	if token, ok := doc.Find(selector.LoginToken).Attr("value"); ok {
 		return token
 	}
 	return ""
@@ -30,7 +30,7 @@ func (user *User) getCSRFToken() string {
 		return ""
 	}
 
-	if token, ok := doc.Find(selector.CSRFTOKEN).Attr("content"); ok {
+	if token, ok := doc.Find(selector.CSRFToken).Attr("content"); ok {
 		return token
 	}
 	return ""
