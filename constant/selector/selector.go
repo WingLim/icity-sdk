@@ -1,6 +1,7 @@
 package selector
 
 const (
-	TOKEN = "input[name=authenticity_token]"
-	WORLD = "body > div.container.below-top-navbar > div > div.box-head > h2"
+	LOGINTOKEN  = "input[name=authenticity_token]"
+	LOGOUTTOKEN = "meta[name=csrf-token]"
+	WORLD       = "body > div.container.below-top-navbar > div > div.box-head > h2"
 )
