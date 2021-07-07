@@ -13,34 +13,41 @@ import (
 	"github.com/WingLim/icity-sdk/constant/path"
 )
 
+type Header struct {
+	Key   string
+	Value string
+}
+
 const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
 
-func (user *User) do(req *http.Request) (resp *http.Response, err error) {
+func (user *User) do(req *http.Request, headers ...Header) (resp *http.Response, err error) {
 	req.Header.Set("User-Agent", userAgent)
+	for _, h := range headers {
+		req.Header.Set(h.Key, h.Value)
+	}
 	return user.client.Do(req)
 }
 
-func (user *User) get(urlPath string) (resp *http.Response, err error) {
+func (user *User) get(urlPath string, headers ...Header) (resp *http.Response, err error) {
 	fullUrl := path.HOME + urlPath
 	req, err := http.NewRequest(http.MethodGet, fullUrl, nil)
 	if err != nil {
 		return
 	}
-	return user.do(req)
+	return user.do(req, headers...)
 }
 
-func (user *User) post(urlPath, contentType string, body io.Reader) (resp *http.Response, err error) {
+func (user *User) post(urlPath, contentType string, body io.Reader, headers ...Header) (resp *http.Response, err error) {
 	fullUrl := path.HOME + urlPath
 	req, err := http.NewRequest(http.MethodPost, fullUrl, body)
 	if err != nil {
 		return
 	}
-	req.Header.Set("Referer", path.HOME+"/")
-	return user.do(req)
+	return user.do(req, headers...)
 }
 
-func (user *User) postForm(urlPath string, data url.Values) (resp *http.Response, err error) {
-	return user.post(urlPath, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()))
+func (user *User) postForm(urlPath string, data url.Values, headers ...Header) (resp *http.Response, err error) {
+	return user.post(urlPath, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), headers...)
 }
 
 func (user *User) getWithDoc(urlPath string) (*goquery.Document, error) {
