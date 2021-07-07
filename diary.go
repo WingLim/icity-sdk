@@ -3,11 +3,13 @@ package icity_sdk
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/WingLim/icity-sdk/constant/data"
-	"github.com/WingLim/icity-sdk/constant/path"
 	"io"
 	"log"
+	"net/http"
 	"net/url"
+
+	"github.com/WingLim/icity-sdk/constant/data"
+	"github.com/WingLim/icity-sdk/constant/path"
 )
 
 type Privacy int
@@ -77,4 +79,36 @@ func (user *User) DeleteDiary(id string) (deleteResp Response) {
 		return
 	}
 	return
+}
+
+func (user *User) Like(id string) bool {
+	urlPath := fmt.Sprintf(path.LIKE, id)
+
+	resp, err := user.post(urlPath, "", nil, iCRenderToHeader)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	defer closeBody(resp.Body)
+
+	if resp.StatusCode == http.StatusOK {
+		return true
+	}
+	return false
+}
+
+func (user *User) UnLike(id string) bool {
+	urlPath := fmt.Sprintf(path.UNLIKE, id)
+
+	resp, err := user.delete(urlPath, iCRenderToHeader)
+	if err != nil {
+		log.Println(err)
+		return false
+	}
+	defer closeBody(resp.Body)
+
+	if resp.StatusCode == http.StatusOK {
+		return true
+	}
+	return false
 }

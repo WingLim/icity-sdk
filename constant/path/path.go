@@ -9,8 +9,11 @@ const (
 	WORLD   = "/world"
 )
 
-// API
+// Diary Url Path
 const (
 	NEWDIARY    = "/activities?act_id=301&re_id=icty%2Buser%2B1irqw29"
 	DELETEDIARY = "/a/%s?act_id=301&re_id=icty%%2Buser%%2B1irqw29"
+
+	LIKE   = "/a/%s/like"
+	UNLIKE = "/a/%s/unlike"
 )

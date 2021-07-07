@@ -15,6 +15,11 @@ var (
 		Key:   "Accept",
 		Value: "application/json, text/javascript, */*; q=0.01",
 	}
+
+	iCRenderToHeader = Header{
+		Key:   "IC-Render-To",
+		Value: "self",
+	}
 )
 
 func refererHeader(value string) Header {
