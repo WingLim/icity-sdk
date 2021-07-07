@@ -7,10 +7,21 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/WingLim/icity-sdk/constant/data"
 	"github.com/WingLim/icity-sdk/constant/path"
 )
+
+type Diary struct {
+	ID       string
+	Nickname string
+
+	Title    string
+	Content  string
+	Location string
+	Date     time.Time
+}
 
 type Response struct {
 	// Success is operation status.
