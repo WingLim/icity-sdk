@@ -24,3 +24,10 @@ const (
 
 	DefaultMethod = "delete"
 )
+
+// For send diary
+const (
+	TitleKEY   = "activity[data][title]"
+	CommentKEY = "activity[data][comment]"
+	PrivacyKEY = "activity[data][user_privacy]"
+)

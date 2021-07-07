@@ -42,6 +42,15 @@ func (user *User) post(urlPath, contentType string, body io.Reader, headers ...H
 	return user.do(req, headers...)
 }
 
+func (user *User) delete(urlPath string, headers ...Header) (resp *http.Response, err error) {
+	fullUrl := path.HOME + urlPath
+	req, err := http.NewRequest(http.MethodDelete, fullUrl, nil)
+	if err != nil {
+		return
+	}
+	return user.do(req, headers...)
+}
+
 func (user *User) postForm(urlPath string, data url.Values, headers ...Header) (resp *http.Response, err error) {
 	return user.post(urlPath, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), headers...)
 }
