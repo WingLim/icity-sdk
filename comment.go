@@ -12,7 +12,7 @@ import (
 )
 
 func (user *User) NewComment(id, comment string) (newResp Response) {
-	urlPath := fmt.Sprintf(path.COMMENT, id)
+	urlPath := fmt.Sprintf(path.NEWCOMMENT, id)
 
 	postData := url.Values{}
 	postData.Set(data.CommentKEY, comment)
@@ -31,6 +31,26 @@ func (user *User) NewComment(id, comment string) (newResp Response) {
 	}
 
 	err = json.Unmarshal(res, &newResp)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	return
+}
+
+func (user *User) DeleteComment(id string) (deleteResp Response) {
+	urlPath := fmt.Sprintf(path.DELETECOMMENT, id)
+
+	headers := generateHeaders(user)
+	resp, err := user.delete(urlPath, headers...)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	defer closeBody(resp.Body)
+
+	res, _ := io.ReadAll(resp.Body)
+	err = json.Unmarshal(res, &deleteResp)
 	if err != nil {
 		log.Println(err)
 		return
