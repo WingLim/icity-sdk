@@ -19,5 +19,6 @@ const (
 
 	SETPRIVACY = "/a/%s/set_privacy?user_privacy=%d"
 
-	COMMENT = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
+	NEWCOMMENT    = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
+	DELETECOMMENT = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2Bou4yza9"
 )
