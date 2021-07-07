@@ -16,3 +16,14 @@ func (user *User) postForm(path string, data url.Values) (resp *http.Response, e
 	fullUrl := constant.HOME + path
 	return user.client.PostForm(fullUrl, data)
 }
+
+func (user *User) initClient() {
+	jar, err := cookiejar.New(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	user.client.Jar = jar
+	user.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
+		return http.ErrUseLastResponse
+	}
+}
