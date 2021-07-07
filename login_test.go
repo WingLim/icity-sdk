@@ -17,7 +17,7 @@ func TestGetLoginToken(t *testing.T) {
 func TestGetLogoutToken(t *testing.T) {
 	user := Login(myUsername, myPassword, false)
 
-	token := user.getLogoutToken()
+	token := user.getCSRFToken()
 	assert.NotZero(t, token)
 }
 

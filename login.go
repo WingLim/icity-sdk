@@ -2,13 +2,13 @@ package icity_sdk
 
 import (
 	"fmt"
-	"github.com/WingLim/icity-sdk/constant/path"
 	"log"
 	"net/http"
 	"net/url"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/WingLim/icity-sdk/constant/data"
+	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
 )
 
@@ -24,13 +24,13 @@ func (user *User) getLoginToken() string {
 	return ""
 }
 
-func (user *User) getLogoutToken() string {
+func (user *User) getCSRFToken() string {
 	doc, err := user.getWithDoc("/")
 	if err != nil {
 		return ""
 	}
 
-	if token, ok := doc.Find(selector.LOGOUTTOKEN).Attr("content"); ok {
+	if token, ok := doc.Find(selector.CSRFTOKEN).Attr("content"); ok {
 		return token
 	}
 	return ""
@@ -112,7 +112,7 @@ doLogin:
 }
 
 func (user *User) logout() error {
-	token := user.getLogoutToken()
+	token := user.getCSRFToken()
 	postData := user.buildLogoutData(token)
 
 	resp, err := user.postForm(path.SIGNOUT, postData)
