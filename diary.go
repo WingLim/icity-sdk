@@ -66,9 +66,9 @@ func (user *User) NewDiary(title, content string, privacy Privacy) (newResp Resp
 	return
 }
 
-// DeleteDiary deletes the diary with given id.
-func (user *User) DeleteDiary(id string) (deleteResp Response) {
-	urlPath := fmt.Sprintf(path.DELETEDIARY, id)
+// DeleteDiary deletes the diary with given diary id.
+func (user *User) DeleteDiary(diaryId string) (deleteResp Response) {
+	urlPath := fmt.Sprintf(path.DELETEDIARY, diaryId)
 
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
@@ -87,9 +87,9 @@ func (user *User) DeleteDiary(id string) (deleteResp Response) {
 	return
 }
 
-// Like likes a diary with given id.
-func (user *User) Like(id string) bool {
-	urlPath := fmt.Sprintf(path.LIKE, id)
+// Like likes a diary with given diary id.
+func (user *User) Like(diaryId string) bool {
+	urlPath := fmt.Sprintf(path.LIKE, diaryId)
 
 	resp, err := user.post(urlPath, "", nil, iCRenderToHeader)
 	if err != nil {
@@ -104,9 +104,9 @@ func (user *User) Like(id string) bool {
 	return false
 }
 
-// UnLike unlikes a diary with given id.
-func (user *User) UnLike(id string) bool {
-	urlPath := fmt.Sprintf(path.UNLIKE, id)
+// UnLike unlikes a diary with given diary id.
+func (user *User) UnLike(diaryId string) bool {
+	urlPath := fmt.Sprintf(path.UNLIKE, diaryId)
 
 	resp, err := user.delete(urlPath, iCRenderToHeader)
 	if err != nil {
