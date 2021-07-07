@@ -11,8 +11,8 @@ import (
 	"github.com/WingLim/icity-sdk/constant/path"
 )
 
-func (user *User) NewComment(id, comment string) (newResp Response) {
-	urlPath := fmt.Sprintf(path.NEWCOMMENT, id)
+func (user *User) NewComment(diaryId, comment string) (newResp Response) {
+	urlPath := fmt.Sprintf(path.NEWCOMMENT, diaryId)
 
 	postData := url.Values{}
 	postData.Set(data.CommentKEY, comment)
@@ -38,8 +38,8 @@ func (user *User) NewComment(id, comment string) (newResp Response) {
 	return
 }
 
-func (user *User) DeleteComment(id string) (deleteResp Response) {
-	urlPath := fmt.Sprintf(path.DELETECOMMENT, id)
+func (user *User) DeleteComment(commentId string) (deleteResp Response) {
+	urlPath := fmt.Sprintf(path.DELETECOMMENT, commentId)
 
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
