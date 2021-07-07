@@ -1,53 +1,62 @@
 package icity_sdk
 
 import (
-	"errors"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
-	"github.com/WingLim/icity-sdk/constant"
-	data2 "github.com/WingLim/icity-sdk/constant/data"
-	"github.com/WingLim/icity-sdk/constant/selector"
+	"github.com/WingLim/icity-sdk/constant/path"
 	"log"
 	"net/http"
 	"net/url"
+
+	"github.com/PuerkitoBio/goquery"
+	"github.com/WingLim/icity-sdk/constant/data"
+	"github.com/WingLim/icity-sdk/constant/selector"
 )
 
-func (user *User) getToken() error {
-	resp, err := user.get(constant.WELCOME)
+func (user *User) getLoginToken() string {
+	doc, err := user.getWithDoc(path.WELCOME)
 	if err != nil {
-		return err
-	}
-	defer closeBody(resp.Body)
-
-	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("status code error: %d %s", resp.StatusCode, resp.Status)
+		return ""
 	}
 
-	doc, err := goquery.NewDocumentFromReader(resp.Body)
-	if err != nil {
-		return err
+	if token, ok := doc.Find(selector.LOGINTOKEN).Attr("value"); ok {
+		return token
 	}
-
-	if token, ok := doc.Find(selector.TOKEN).Attr("value"); ok {
-		user.token = token
-		return nil
-	}
-	return errors.New("fail to get token")
+	return ""
 }
 
-func (user *User) buildData() url.Values {
-	data := url.Values{}
-	data.Set(data2.Utf8KEY, data2.DefaultUTF8)
-	data.Set(data2.TokenKEY, user.token)
-	data.Set(data2.UsernameKEY, user.Username)
-	data.Set(data2.PasswordKEY, user.Password)
-	data.Set(data2.CommitKEY, data2.DefaultCOMMIT)
-	data.Set(data2.RememberKEY, data2.DefaultRemember)
-	return data
+func (user *User) getLogoutToken() string {
+	doc, err := user.getWithDoc("/")
+	if err != nil {
+		return ""
+	}
+
+	if token, ok := doc.Find(selector.LOGOUTTOKEN).Attr("content"); ok {
+		return token
+	}
+	return ""
+}
+
+func (user *User) buildLoginData(token string) url.Values {
+	postData := url.Values{}
+	postData.Set(data.Utf8KEY, data.DefaultUtf8)
+	postData.Set(data.TokenKEY, token)
+	postData.Set(data.UsernameKEY, user.Username)
+	postData.Set(data.PasswordKEY, user.Password)
+	postData.Set(data.CommitKEY, data.DefaultCommit)
+	postData.Add(data.RememberKEY, "0")
+	postData.Add(data.RememberKEY, data.DefaultRemember)
+	return postData
+}
+
+func (user *User) buildLogoutData(token string) url.Values {
+	postData := url.Values{}
+	postData.Set(data.MethodKEY, data.DefaultMethod)
+	postData.Set(data.TokenKEY, token)
+	return postData
 }
 
 func (user *User) checkLoginStatus() bool {
-	resp, err := user.get(constant.WORLD)
+	resp, err := user.get(path.WORLD)
 	if err != nil {
 		return false
 	}
@@ -64,17 +73,13 @@ func (user *User) checkLoginStatus() bool {
 	return true
 }
 
-func Login(username, password string, saveCookies bool) *User {
-	user := NewUser(username, password)
+func (user *User) login(saveCookies bool) *User {
 	if saveCookies {
 		cookies := readCookiesFromFile()
 		if len(cookies) == 0 {
 			goto doLogin
 		}
-		cookieUrl, err := url.Parse(constant.HOME)
-		if err != nil {
-			return nil
-		}
+		cookieUrl, _ := url.Parse(path.HOME)
 		user.client.Jar.SetCookies(cookieUrl, cookies)
 		if user.checkLoginStatus() {
 			return user
@@ -82,27 +87,55 @@ func Login(username, password string, saveCookies bool) *User {
 	}
 
 doLogin:
-	err := user.getToken()
-	if err != nil {
-		log.Fatal(err)
-	}
-	data := user.buildData()
+	token := user.getLoginToken()
+	postData := user.buildLoginData(token)
 
-	resp, err := user.postForm(constant.SIGNIN, data)
+	resp, err := user.postForm(path.SIGNIN, postData)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer closeBody(resp.Body)
 
 	if saveCookies {
-		if err = saveCookiesToFile(resp.Cookies()); err != nil {
+		cookieUrl, _ := url.Parse(path.HOME)
+		cookies := user.client.Jar.Cookies(cookieUrl)
+		if err = saveCookiesToFile(cookies); err != nil {
 			return nil
 		}
 	}
 
-	if len(resp.Cookies()) != 0 {
+	if len(resp.Cookies()) != 0 && resp.StatusCode == http.StatusFound {
 		return user
 	}
 
+	return nil
+}
+
+func (user *User) logout() error {
+	token := user.getLogoutToken()
+	postData := user.buildLogoutData(token)
+
+	resp, err := user.postForm(path.SIGNOUT, postData)
+	if err != nil {
+		return err
+	}
+	defer closeBody(resp.Body)
+
+	if resp.StatusCode != http.StatusFound {
+		return fmt.Errorf("fail to logout: %d %s", resp.StatusCode, resp.Status)
+	}
+	return nil
+}
+
+func Login(username, password string, saveCookies bool) *User {
+	user := NewUser(username, password)
+	return user.login(saveCookies)
+}
+
+func Logout(user *User) error {
+	err := user.logout()
+	if err != nil {
+		return err
+	}
 	return nil
 }
