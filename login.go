@@ -55,6 +55,7 @@ func (user *User) buildLogoutData(token string) url.Values {
 	return postData
 }
 
+// checkLoginStatus checks if we have the correct permissions.
 func (user *User) checkLoginStatus() bool {
 	resp, err := user.get(path.WORLD)
 	if err != nil {
@@ -81,6 +82,7 @@ func (user *User) login(saveCookies bool) *User {
 		}
 		cookieUrl, _ := url.Parse(path.HOME)
 		user.client.Jar.SetCookies(cookieUrl, cookies)
+		// If the cookies is expired, then login again.
 		if user.checkLoginStatus() {
 			return user
 		}
@@ -127,11 +129,15 @@ func (user *User) logout() error {
 	return nil
 }
 
+// Login logins user to iCity.
+// If set true to saveCookies, then will write cookies to cookies.json,
+// then will login to iCity with exists cookies.
 func Login(username, password string, saveCookies bool) *User {
 	user := NewUser(username, password)
 	return user.login(saveCookies)
 }
 
+// Logout logouts user from iCity
 func Logout(user *User) error {
 	err := user.logout()
 	if err != nil {
