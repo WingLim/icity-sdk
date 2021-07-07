@@ -25,10 +25,15 @@ const (
 )
 
 type Response struct {
-	Success       bool   `json:"success"`
+	// Success is operation status.
+	Success bool `json:"success"`
+
+	// ActivityToken is the id of diary.
 	ActivityToken string `json:"activity_token"`
 }
 
+// generateHeaders generates some headers for make sure we can have
+// correct response from iCity.
 func generateHeaders(user *User) []Header {
 	return []Header{
 		csrfHeader(user.getCSRFToken()),
@@ -38,10 +43,11 @@ func generateHeaders(user *User) []Header {
 	}
 }
 
-func (user *User) NewDiary(title, comment string, privacy Privacy) (newResp Response) {
+// NewDiary creates a new diary with title, content and privacy.
+func (user *User) NewDiary(title, content string, privacy Privacy) (newResp Response) {
 	postData := url.Values{}
 	postData.Set(data.TitleKEY, title)
-	postData.Set(data.CommentKEY, comment)
+	postData.Set(data.CommentKEY, content)
 	postData.Set(data.PrivacyKEY, privacy.String())
 
 	headers := generateHeaders(user)
@@ -61,6 +67,7 @@ func (user *User) NewDiary(title, comment string, privacy Privacy) (newResp Resp
 	return
 }
 
+// DeleteDiary deletes the diary with given id.
 func (user *User) DeleteDiary(id string) (deleteResp Response) {
 	urlPath := fmt.Sprintf(path.DELETEDIARY, id)
 
@@ -81,6 +88,7 @@ func (user *User) DeleteDiary(id string) (deleteResp Response) {
 	return
 }
 
+// Like likes a diary with given id.
 func (user *User) Like(id string) bool {
 	urlPath := fmt.Sprintf(path.LIKE, id)
 
@@ -97,6 +105,7 @@ func (user *User) Like(id string) bool {
 	return false
 }
 
+// UnLike unlikes a diary with given id.
 func (user *User) UnLike(id string) bool {
 	urlPath := fmt.Sprintf(path.UNLIKE, id)
 
