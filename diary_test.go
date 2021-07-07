@@ -6,7 +6,7 @@ import (
 )
 
 func TestNewDiary(t *testing.T) {
-	user := Login(myUsername, myPassword, true)
+	user := login()
 
 	title := "Test"
 	comment := "Test"
@@ -17,7 +17,7 @@ func TestNewDiary(t *testing.T) {
 }
 
 func TestDeleteDiary(t *testing.T) {
-	user := Login(myUsername, myPassword, true)
+	user := login()
 
 	title := "Test"
 	comment := "Test"
@@ -32,7 +32,7 @@ func TestDeleteDiary(t *testing.T) {
 }
 
 func TestLike(t *testing.T) {
-	user := Login(myUsername, myPassword, true)
+	user := login()
 
 	title := "Test"
 	comment := "Test"
@@ -48,7 +48,7 @@ func TestLike(t *testing.T) {
 }
 
 func TestUnLike(t *testing.T) {
-	user := Login(myUsername, myPassword, true)
+	user := login()
 
 	title := "Test"
 	comment := "Test"

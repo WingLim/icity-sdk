@@ -7,6 +7,10 @@ import (
 	"testing"
 )
 
+func login() *User {
+	return Login(myUsername, myPassword, true)
+}
+
 func TestGetLoginToken(t *testing.T) {
 	user := NewUser("", "")
 
@@ -15,7 +19,7 @@ func TestGetLoginToken(t *testing.T) {
 }
 
 func TestGetLogoutToken(t *testing.T) {
-	user := Login(myUsername, myPassword, false)
+	user := login()
 
 	token := user.getCSRFToken()
 	assert.NotZero(t, token)
@@ -24,7 +28,7 @@ func TestGetLogoutToken(t *testing.T) {
 func TestLogin(t *testing.T) {
 	// This is set in config.go, if you need to test with your own account,
 	// rewrite it.
-	user := Login(myUsername, myPassword, true)
+	user := login()
 
 	resp, err := user.get(path.WORLD)
 	assert.Nil(t, err)
@@ -34,7 +38,7 @@ func TestLogin(t *testing.T) {
 }
 
 func TestLogout(t *testing.T) {
-	user := Login(myUsername, myPassword, false)
+	user := login()
 
 	err := Logout(user)
 
