@@ -115,12 +115,7 @@ func (user *User) logout() error {
 	token := user.getCSRFToken()
 	postData := user.buildLogoutData(token)
 
-	refererHeader := Header{
-		Key:   "Referer",
-		Value: path.HOME + "/",
-	}
-
-	resp, err := user.postForm(path.SIGNOUT, postData, refererHeader)
+	resp, err := user.postForm(path.SIGNOUT, postData, refererHeader(path.HOME+"/"))
 	if err != nil {
 		return err
 	}

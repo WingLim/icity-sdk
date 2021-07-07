@@ -13,11 +13,6 @@ import (
 	"github.com/WingLim/icity-sdk/constant/path"
 )
 
-type Header struct {
-	Key   string
-	Value string
-}
-
 const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
 
 func (user *User) do(req *http.Request, headers ...Header) (resp *http.Response, err error) {
@@ -43,6 +38,7 @@ func (user *User) post(urlPath, contentType string, body io.Reader, headers ...H
 	if err != nil {
 		return
 	}
+	req.Header.Set("Content-Type", contentType)
 	return user.do(req, headers...)
 }
 
