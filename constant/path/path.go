@@ -18,4 +18,6 @@ const (
 	UNLIKE = "/a/%s/unlike"
 
 	SETPRIVACY = "/a/%s/set_privacy?user_privacy=%d"
+
+	COMMENT = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
 )
