@@ -12,18 +12,6 @@ import (
 	"github.com/WingLim/icity-sdk/constant/path"
 )
 
-type Privacy int
-
-func (p Privacy) String() string {
-	return fmt.Sprintf("%d", p)
-}
-
-const (
-	Public Privacy = iota + 1
-	OnlyFriend
-	Private
-)
-
 type Response struct {
 	// Success is operation status.
 	Success bool `json:"success"`

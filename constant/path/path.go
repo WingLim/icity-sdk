@@ -16,4 +16,6 @@ const (
 
 	LIKE   = "/a/%s/like"
 	UNLIKE = "/a/%s/unlike"
+
+	SETPRIVACY = "/a/%s/set_privacy?user_privacy=%d"
 )
