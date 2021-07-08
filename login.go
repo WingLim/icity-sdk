@@ -44,7 +44,7 @@ func buildLoginData(username, password, token string) url.Values {
 	postData.Set(data.TokenKEY, token)
 	postData.Set(data.UsernameKEY, username)
 	postData.Set(data.PasswordKEY, password)
-	postData.Set(data.CommitKEY, data.DefaultCommit)
+	postData.Set(data.CommitKEY, "登入")
 	postData.Add(data.RememberKEY, "0")
 	postData.Add(data.RememberKEY, data.DefaultRemember)
 	return postData
