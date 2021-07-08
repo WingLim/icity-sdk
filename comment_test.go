@@ -31,6 +31,18 @@ func TestUser_DeleteComment(t *testing.T) {
 	assert.Equal(t, id, deleteResp.ActivityToken)
 }
 
+func TestUser_ReplyComment(t *testing.T) {
+	user := login()
+
+	commentId := "iwqbwn7"
+	userId := "winglims"
+	comment := "I am replying you!"
+
+	resp := user.ReplyComment(userId, commentId, comment)
+	assert.True(t, resp.Success)
+	assert.NotZero(t, resp.ActivityToken)
+}
+
 func TestUser_GetComments(t *testing.T) {
 	user := login()
 
