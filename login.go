@@ -6,7 +6,6 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/PuerkitoBio/goquery"
 	"github.com/WingLim/icity-sdk/constant/data"
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
@@ -59,15 +58,8 @@ func buildLogoutData(token string) url.Values {
 
 // checkLoginStatus checks if we have the correct permissions.
 func (user *User) checkLoginStatus() bool {
-	resp, err := user.get(path.WORLD)
+	doc, err := user.getWithDoc(path.WORLD)
 	if err != nil {
-		log.Error(err)
-		return false
-	}
-
-	doc, err := goquery.NewDocumentFromReader(resp.Body)
-	if err != nil {
-		log.Error(err)
 		return false
 	}
 
