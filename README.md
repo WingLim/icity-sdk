@@ -95,7 +95,7 @@ user.Like(diaryID string) bool
 ```go
 // true: 成功
 // false: 失败 
-user.UnLike(diaryID string) bool
+user.Unlike(diaryID string) bool
 ```
 
 ### 评论
@@ -169,6 +169,20 @@ type User struct {
 	// 隐私设置
 	SettingsPrivacy SettingsPrivacy
 }
+```
+
+- 关注用户
+```go
+// true: 成功
+// false: 失败 
+user.Follow(userID string) bool
+```
+
+- 取消关注用户
+```go
+// true: 成功
+// false: 失败 
+user.Unfollow(userID string) bool
 ```
 
 - 设置昵称
