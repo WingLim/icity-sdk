@@ -11,14 +11,14 @@ import (
 func parseDiary(s *goquery.Selection) Diary {
 	diary := Diary{}
 
-	id, _ := s.Find("div.meta > a.timeago").Attr("href")
+	id, _ := s.Find(selector.DiaryId).Attr("href")
 	diary.ID = strings.Split(id, "/")[2]
-	diary.Nickname = s.Find("div.line > a").Text()
+	diary.Nickname = s.Find(selector.DiaryNickname).Text()
 
-	diary.Title = s.Find("div.line > h4 > a").Text()
-	diary.Content = s.Find("div.line > div.comment").Text()
-	diary.Location = s.Find("div.line > span.location").Text()
-	date, _ := s.Find("div.meta > a.timeago > time").Attr("datetime")
+	diary.Title = s.Find(selector.DiaryTitle).Text()
+	diary.Content = s.Find(selector.DiaryContent).Text()
+	diary.Location = s.Find(selector.DiaryLocation).Text()
+	date, _ := s.Find(selector.DiaryDate).Attr("datetime")
 	diary.Date, _ = time.Parse("2006-01-02T15:04:05Z", date)
 
 	return diary
@@ -32,7 +32,7 @@ func (user *User) GetWorld() []Diary {
 
 	var diarys []Diary
 
-	doc.Find(selector.WORLDDIARYS).Each(func(i int, s *goquery.Selection) {
+	doc.Find(selector.WorldDiarys).Each(func(i int, s *goquery.Selection) {
 		diarys = append(diarys, parseDiary(s))
 	})
 
