@@ -22,8 +22,8 @@ type Comment struct {
 }
 
 // NewComment creates a new comment of a diary by diary id.
-func (user *User) NewComment(diaryId, comment string) (newResp Response) {
-	urlPath := fmt.Sprintf(path.NEWCOMMENT, diaryId)
+func (user *User) NewComment(diaryID, comment string) (newResp Response) {
+	urlPath := fmt.Sprintf(path.NEWCOMMENT, diaryID)
 
 	postData := url.Values{}
 	postData.Set(data.CommentKEY, comment)
@@ -50,8 +50,8 @@ func (user *User) NewComment(diaryId, comment string) (newResp Response) {
 }
 
 // DeleteComment deletes a comment by comment id.
-func (user *User) DeleteComment(commentId, diaryId string) (deleteResp Response) {
-	urlPath := fmt.Sprintf(path.DELETECOMMENT, commentId, diaryId)
+func (user *User) DeleteComment(commentID, diaryID string) (deleteResp Response) {
+	urlPath := fmt.Sprintf(path.DELETECOMMENT, commentID, diaryID)
 
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
@@ -71,15 +71,15 @@ func (user *User) DeleteComment(commentId, diaryId string) (deleteResp Response)
 }
 
 // ReplyComment replies user by user id and diary id.
-func (user *User) ReplyComment(userId, diaryId, comment string) Response {
-	comment = fmt.Sprintf("@%s %s", userId, comment)
+func (user *User) ReplyComment(userID, diaryID, comment string) Response {
+	comment = fmt.Sprintf("@%s %s", userID, comment)
 
-	return user.NewComment(diaryId, comment)
+	return user.NewComment(diaryID, comment)
 }
 
 // GetComments gets diary comments by diary id.
-func (user *User) GetComments(diaryId string) []Comment {
-	urlPath := fmt.Sprintf(path.GETCOMMENTS, diaryId)
+func (user *User) GetComments(diaryID string) []Comment {
+	urlPath := fmt.Sprintf(path.GETCOMMENTS, diaryID)
 
 	doc, err := user.getWithDoc(urlPath, iCRenderToRepliesHeader)
 	if err != nil {
