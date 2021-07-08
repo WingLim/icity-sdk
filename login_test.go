@@ -1,9 +1,7 @@
 package icity_sdk
 
 import (
-	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/stretchr/testify/assert"
-	"net/http"
 	"testing"
 )
 
@@ -26,13 +24,11 @@ func TestUser_GetCSRFToken(t *testing.T) {
 }
 
 func TestLogin(t *testing.T) {
-	// This is set in config.go, if you need to test with your own account,
-	// rewrite it.
-	user := login()
-
-	resp, err := user.get(path.World)
+	config, err := ReadConfig("config.json")
 	assert.Nil(t, err)
-	assert.Equal(t, resp.StatusCode, http.StatusOK)
+
+	user := Login(config.Username, config.Password)
+
 	assert.NotNil(t, user)
 	assert.NotZero(t, user.UserID)
 }

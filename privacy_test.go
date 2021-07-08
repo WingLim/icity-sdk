@@ -9,17 +9,19 @@ func TestUser_SetPrivacy(t *testing.T) {
 	user := login()
 
 	resp := user.NewDiary("", "hi", Public)
-	id := resp.ActivityToken
+	diaryID := resp.ActivityToken
 
 	var ok bool
-	ok = user.SetOnlyFriend(id)
+	ok = user.SetOnlyFriend(diaryID)
 	assert.True(t, ok)
 
-	ok = user.SetPrivate(id)
+	ok = user.SetPrivate(diaryID)
 	assert.True(t, ok)
 
-	ok = user.SetPublic(id)
+	ok = user.SetPublic(diaryID)
 	assert.True(t, ok)
 
-	user.DeleteDiary(id)
+	t.Cleanup(func() {
+		user.DeleteDiary(diaryID)
+	})
 }

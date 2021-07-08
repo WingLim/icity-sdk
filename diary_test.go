@@ -38,13 +38,16 @@ func TestUser_Like(t *testing.T) {
 	comment := "Test"
 
 	newResp := user.NewDiary(title, comment, Private)
+	diaryID := newResp.ActivityToken
 	assert.True(t, newResp.Success)
-	assert.NotZero(t, newResp.ActivityToken)
+	assert.NotZero(t, diaryID)
 
-	ok := user.Like(newResp.ActivityToken)
+	ok := user.Like(diaryID)
 	assert.True(t, ok)
 
-	_ = user.DeleteDiary(newResp.ActivityToken)
+	t.Cleanup(func() {
+		user.DeleteDiary(diaryID)
+	})
 }
 
 func TestUser_UnLike(t *testing.T) {
@@ -57,12 +60,14 @@ func TestUser_UnLike(t *testing.T) {
 	assert.True(t, newResp.Success)
 	assert.NotZero(t, newResp.ActivityToken)
 
-	id := newResp.ActivityToken
-	ok := user.Like(id)
+	diaryID := newResp.ActivityToken
+	ok := user.Like(diaryID)
 	assert.True(t, ok)
 
-	ok = user.Unlike(id)
+	ok = user.Unlike(diaryID)
 	assert.True(t, ok)
 
-	_ = user.DeleteDiary(newResp.ActivityToken)
+	t.Cleanup(func() {
+		user.DeleteDiary(diaryID)
+	})
 }
