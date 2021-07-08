@@ -126,7 +126,7 @@ type SettingsPrivacy struct {
 func (user *User) doPrivacySettings(settings ...Setting) bool {
 	postData := buildSettingsData(settings)
 
-	resp, err := user.postForm(path.PRIVACY, postData)
+	resp, err := user.postForm(path.Privacy, postData)
 	if err != nil {
 		log.Error(err)
 		return false

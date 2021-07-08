@@ -13,7 +13,7 @@ import (
 )
 
 func (user *User) getLoginToken() string {
-	doc, err := user.getWithDoc(path.WELCOME)
+	doc, err := user.getWithDoc(path.Welcome)
 	if err != nil {
 		return ""
 	}
@@ -58,7 +58,7 @@ func buildLogoutData(token string) url.Values {
 
 // checkLoginStatus checks if we have the correct permissions.
 func (user *User) checkLoginStatus() bool {
-	doc, err := user.getWithDoc(path.WORLD)
+	doc, err := user.getWithDoc(path.World)
 	if err != nil {
 		return false
 	}
@@ -76,7 +76,7 @@ func (user *User) login(saveCookies bool) *User {
 		if len(cookies) == 0 {
 			goto doLogin
 		}
-		cookieUrl, _ := url.Parse(path.HOME)
+		cookieUrl, _ := url.Parse(path.Home)
 		user.client.Jar.SetCookies(cookieUrl, cookies)
 		// If the cookies is expired, then login again.
 		if user.checkLoginStatus() {
@@ -88,7 +88,7 @@ doLogin:
 	token := user.getLoginToken()
 	postData := buildLoginData(user.Username, user.Password, token)
 
-	resp, err := user.postForm(path.SIGNIN, postData)
+	resp, err := user.postForm(path.Login, postData)
 	if err != nil {
 		log.Error(err)
 		return nil
@@ -96,7 +96,7 @@ doLogin:
 	defer closeBody(resp.Body)
 
 	if saveCookies {
-		cookieUrl, _ := url.Parse(path.HOME)
+		cookieUrl, _ := url.Parse(path.Home)
 		cookies := user.client.Jar.Cookies(cookieUrl)
 		if err = saveCookiesToFile(cookies); err != nil {
 			log.Error(err)
@@ -115,7 +115,7 @@ func (user *User) logout() error {
 	token := user.getCSRFToken()
 	postData := buildLogoutData(token)
 
-	resp, err := user.postForm(path.SIGNOUT, postData, refererHeader(path.HOME+"/"))
+	resp, err := user.postForm(path.Logout, postData, refererHeader(path.Home+"/"))
 	if err != nil {
 		return err
 	}

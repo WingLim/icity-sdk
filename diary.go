@@ -29,7 +29,7 @@ type Diary struct {
 func generateHeaders(user *User) []Header {
 	return []Header{
 		csrfHeader(user.getCSRFToken()),
-		refererHeader(path.HOME + "/"),
+		refererHeader(path.Home + "/"),
 		xRequestedWithHeader,
 		acceptHeader,
 	}
@@ -43,7 +43,7 @@ func (user *User) NewDiary(title, content string, privacy DiaryPrivacy) (newResp
 	postData.Set(data.PrivacyKEY, privacy.Data())
 
 	headers := generateHeaders(user)
-	resp, err := user.postForm(path.NEWDIARY, postData, headers...)
+	resp, err := user.postForm(path.NewDiary, postData, headers...)
 	if err != nil {
 		log.Error(err)
 		return
@@ -61,7 +61,7 @@ func (user *User) NewDiary(title, content string, privacy DiaryPrivacy) (newResp
 
 // DeleteDiary deletes the diary with given diary id.
 func (user *User) DeleteDiary(diaryId string) (deleteResp Response) {
-	urlPath := fmt.Sprintf(path.DELETEDIARY, diaryId)
+	urlPath := fmt.Sprintf(path.DeleteDiary, diaryId)
 
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
@@ -82,7 +82,7 @@ func (user *User) DeleteDiary(diaryId string) (deleteResp Response) {
 
 // Like likes a diary with given diary id.
 func (user *User) Like(diaryId string) bool {
-	urlPath := fmt.Sprintf(path.LIKE, diaryId)
+	urlPath := fmt.Sprintf(path.Like, diaryId)
 
 	resp, err := user.post(urlPath, "", nil, iCRenderToSelfHeader)
 	if err != nil {
@@ -97,9 +97,9 @@ func (user *User) Like(diaryId string) bool {
 	return false
 }
 
-// UnLike unlikes a diary with given diary id.
-func (user *User) UnLike(diaryId string) bool {
-	urlPath := fmt.Sprintf(path.UNLIKE, diaryId)
+// Unlike unlikes a diary with given diary id.
+func (user *User) Unlike(diaryId string) bool {
+	urlPath := fmt.Sprintf(path.Unlike, diaryId)
 
 	resp, err := user.delete(urlPath, iCRenderToSelfHeader)
 	if err != nil {

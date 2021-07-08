@@ -27,7 +27,7 @@ func buildSettingsData(settings []Setting) url.Values {
 func (user *User) doInfoSettings(settings ...Setting) bool {
 	postData := buildSettingsData(settings)
 
-	resp, err := user.postForm(path.SETTINGSINDEX, postData)
+	resp, err := user.postForm(path.SettingsIndex, postData)
 	if err != nil {
 		log.Error(err)
 		return false

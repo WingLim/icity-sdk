@@ -61,7 +61,7 @@ func TestUnLike(t *testing.T) {
 	ok := user.Like(id)
 	assert.True(t, ok)
 
-	ok = user.UnLike(id)
+	ok = user.Unlike(id)
 	assert.True(t, ok)
 
 	_ = user.DeleteDiary(newResp.ActivityToken)

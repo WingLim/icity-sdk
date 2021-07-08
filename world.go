@@ -8,7 +8,7 @@ import (
 )
 
 func (user *User) GetWorld() []Diary {
-	doc, err := user.getWithDoc(path.WORLD)
+	doc, err := user.getWithDoc(path.World)
 	if err != nil {
 		log.Error(err)
 		return nil

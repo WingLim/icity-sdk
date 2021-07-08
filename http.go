@@ -32,7 +32,7 @@ func (user *User) do(req *http.Request, headers ...Header) (resp *http.Response,
 }
 
 func (user *User) get(urlPath string, headers ...Header) (resp *http.Response, err error) {
-	fullUrl := path.HOME + urlPath
+	fullUrl := path.Home + urlPath
 	req, err := http.NewRequest(http.MethodGet, fullUrl, nil)
 	if err != nil {
 		return
@@ -41,7 +41,7 @@ func (user *User) get(urlPath string, headers ...Header) (resp *http.Response, e
 }
 
 func (user *User) post(urlPath, contentType string, body io.Reader, headers ...Header) (resp *http.Response, err error) {
-	fullUrl := path.HOME + urlPath
+	fullUrl := path.Home + urlPath
 	req, err := http.NewRequest(http.MethodPost, fullUrl, body)
 	if err != nil {
 		return
@@ -51,7 +51,7 @@ func (user *User) post(urlPath, contentType string, body io.Reader, headers ...H
 }
 
 func (user *User) delete(urlPath string, headers ...Header) (resp *http.Response, err error) {
-	fullUrl := path.HOME + urlPath
+	fullUrl := path.Home + urlPath
 	req, err := http.NewRequest(http.MethodDelete, fullUrl, nil)
 	if err != nil {
 		return

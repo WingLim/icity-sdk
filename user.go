@@ -47,7 +47,7 @@ func NewUser(username, password string) *User {
 
 // Follow follows one user by user id.
 func (user *User) Follow(userId string) bool {
-	urlPath := fmt.Sprintf(path.FOLLOW, userId)
+	urlPath := fmt.Sprintf(path.Follow, userId)
 
 	resp, err := user.post(urlPath, "", nil, iCRenderToUserHeader)
 	if err != nil {
@@ -61,9 +61,9 @@ func (user *User) Follow(userId string) bool {
 	return false
 }
 
-// UnFollow unfollows one user by user id.
-func (user *User) UnFollow(userId string) bool {
-	urlPath := fmt.Sprintf(path.UNFOLLOW, userId)
+// Unfollow unfollows one user by user id.
+func (user *User) Unfollow(userId string) bool {
+	urlPath := fmt.Sprintf(path.Unfollow, userId)
 
 	resp, err := user.delete(urlPath, iCRenderToUserHeader)
 	if err != nil {
@@ -78,7 +78,7 @@ func (user *User) UnFollow(userId string) bool {
 }
 
 func (user *User) getUserInfo() error {
-	doc, err := user.getWithDoc(path.SETTINGSINDEX)
+	doc, err := user.getWithDoc(path.SettingsIndex)
 	if err != nil {
 		return err
 	}
@@ -90,7 +90,7 @@ func (user *User) getUserInfo() error {
 }
 
 func (user *User) getUserSettingsPrivacy() error {
-	doc, err := user.getWithDoc(path.PRIVACY)
+	doc, err := user.getWithDoc(path.Privacy)
 	if err != nil {
 		return err
 	}

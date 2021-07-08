@@ -23,7 +23,7 @@ type Comment struct {
 
 // NewComment creates a new comment of a diary by diary id.
 func (user *User) NewComment(diaryID, comment string) (newResp Response) {
-	urlPath := fmt.Sprintf(path.NEWCOMMENT, diaryID)
+	urlPath := fmt.Sprintf(path.NewComment, diaryID)
 
 	postData := url.Values{}
 	postData.Set(data.CommentKEY, comment)
@@ -51,7 +51,7 @@ func (user *User) NewComment(diaryID, comment string) (newResp Response) {
 
 // DeleteComment deletes a comment by comment id.
 func (user *User) DeleteComment(commentID, diaryID string) (deleteResp Response) {
-	urlPath := fmt.Sprintf(path.DELETECOMMENT, commentID, diaryID)
+	urlPath := fmt.Sprintf(path.DeleteComment, commentID, diaryID)
 
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
@@ -79,7 +79,7 @@ func (user *User) ReplyComment(userID, diaryID, comment string) Response {
 
 // GetComments gets diary comments by diary id.
 func (user *User) GetComments(diaryID string) []Comment {
-	urlPath := fmt.Sprintf(path.GETCOMMENTS, diaryID)
+	urlPath := fmt.Sprintf(path.GetComments, diaryID)
 
 	doc, err := user.getWithDoc(urlPath, iCRenderToRepliesHeader)
 	if err != nil {

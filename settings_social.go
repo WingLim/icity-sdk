@@ -11,7 +11,7 @@ import (
 func (user *User) doSocialSettings(settings ...Setting) bool {
 	postData := buildSettingsData(settings)
 
-	resp, err := user.postForm(path.SOCIAL, postData)
+	resp, err := user.postForm(path.Social, postData)
 	if err != nil {
 		log.Error(err)
 		return false

@@ -30,7 +30,7 @@ func TestLogin(t *testing.T) {
 	// rewrite it.
 	user := login()
 
-	resp, err := user.get(path.WORLD)
+	resp, err := user.get(path.World)
 	assert.Nil(t, err)
 	assert.Equal(t, resp.StatusCode, http.StatusOK)
 

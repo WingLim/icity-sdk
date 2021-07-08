@@ -19,6 +19,6 @@ func TestUser_UnFollow(t *testing.T) {
 
 	userId := "winglims"
 
-	ok := user.UnFollow(userId)
+	ok := user.Unfollow(userId)
 	assert.True(t, ok)
 }

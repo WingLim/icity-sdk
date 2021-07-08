@@ -1,36 +1,36 @@
 package path
 
-const HOME = "https://icity.ly"
+const Home = "https://icity.ly"
 
 const (
-	WELCOME = "/welcome"
-	SIGNIN  = "/users/sign_in"
-	SIGNOUT = "/users/sign_out"
-	WORLD   = "/world"
+	Welcome = "/welcome"
+	Login   = "/users/sign_in"
+	Logout  = "/users/sign_out"
+	World   = "/world"
 )
 
 // Diary Url Path
 const (
-	NEWDIARY    = "/activities?act_id=301&re_id=icty%2Buser%2B1irqw29"
-	DELETEDIARY = "/a/%s?act_id=301&re_id=icty%%2Buser%%2B1irqw29"
+	NewDiary    = "/activities?act_id=301&re_id=icty%2Buser%2B1irqw29"
+	DeleteDiary = "/a/%s?act_id=301&re_id=icty%%2Buser%%2B1irqw29"
 
-	LIKE   = "/a/%s/like"
-	UNLIKE = "/a/%s/unlike"
+	Like   = "/a/%s/like"
+	Unlike = "/a/%s/unlike"
 
-	DIARYPRIVACY = "/a/%s/set_privacy?user_privacy=%d"
+	DiaryPrivacy = "/a/%s/set_privacy?user_privacy=%d"
 
-	NEWCOMMENT    = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
-	DELETECOMMENT = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2B%s"
-	GETCOMMENTS   = "/a/%s/expand"
+	NewComment    = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
+	DeleteComment = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2B%s"
+	GetComments   = "/a/%s/expand"
 )
 
 const (
-	FOLLOW   = "/u/%s/follow"
-	UNFOLLOW = "/u/%s/unfollow"
+	Follow   = "/u/%s/follow"
+	Unfollow = "/u/%s/unfollow"
 )
 
 const (
-	SETTINGSINDEX = "/settings/user/index"
-	SOCIAL        = "/settings/user/social"
-	PRIVACY       = "/settings/user/privacy"
+	SettingsIndex = "/settings/user/index"
+	Social        = "/settings/user/social"
+	Privacy       = "/settings/user/privacy"
 )
