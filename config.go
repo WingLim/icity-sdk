@@ -10,7 +10,7 @@ type Config struct {
 	Password string `json:"password"`
 }
 
-func readConfig(filepath string) (config Config, err error) {
+func ReadConfig(filepath string) (config Config, err error) {
 	f, err := os.Open(filepath)
 	if err != nil {
 		return

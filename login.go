@@ -151,7 +151,7 @@ func Login(username, password string, saveCookies bool) *User {
 }
 
 func LoginWithConfig(filepath string, saveCookies bool) *User {
-	config, err := readConfig(filepath)
+	config, err := ReadConfig(filepath)
 	if err != nil {
 		log.Error(err)
 		return nil
