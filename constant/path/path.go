@@ -21,4 +21,5 @@ const (
 
 	NEWCOMMENT    = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
 	DELETECOMMENT = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2Bou4yza9"
+	GETCOMMENTS   = "/a/%s/expand"
 )

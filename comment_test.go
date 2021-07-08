@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewComment(t *testing.T) {
+func TestUser_NewComment(t *testing.T) {
 	user := login()
 
 	diaryId := "ou4yza9"
@@ -29,4 +29,13 @@ func TestUser_DeleteComment(t *testing.T) {
 	deleteResp := user.DeleteComment(id)
 	assert.True(t, deleteResp.Success)
 	assert.Equal(t, id, deleteResp.ActivityToken)
+}
+
+func TestUser_GetComments(t *testing.T) {
+	user := login()
+
+	id := "73sxpl4"
+
+	comments := user.GetComments(id)
+	assert.NotZero(t, comments)
 }
