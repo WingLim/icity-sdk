@@ -92,6 +92,7 @@ func parseComment(s *goquery.Selection) Comment {
 	return comment
 }
 
+// GetComments gets diary comments by diary id.
 func (user *User) GetComments(diaryId string) []Comment {
 	urlPath := fmt.Sprintf(path.GETCOMMENTS, diaryId)
 
