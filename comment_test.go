@@ -34,13 +34,15 @@ func TestUser_DeleteComment(t *testing.T) {
 func TestUser_ReplyComment(t *testing.T) {
 	user := login()
 
-	commentId := "iwqbwn7"
+	diaryId := "iwqbwn7"
 	userId := "winglims"
 	comment := "I am replying you!"
 
-	resp := user.ReplyComment(userId, commentId, comment)
+	resp := user.ReplyComment(userId, diaryId, comment)
 	assert.True(t, resp.Success)
 	assert.NotZero(t, resp.ActivityToken)
+
+	_ = user.DeleteComment(resp.ActivityToken, diaryId)
 }
 
 func TestUser_GetComments(t *testing.T) {
