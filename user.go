@@ -46,8 +46,8 @@ func NewUser(username, password string) *User {
 }
 
 // Follow follows one user by user id.
-func (user *User) Follow(userId string) bool {
-	urlPath := fmt.Sprintf(path.Follow, userId)
+func (user *User) Follow(userID string) bool {
+	urlPath := fmt.Sprintf(path.Follow, userID)
 
 	resp, err := user.post(urlPath, "", nil, iCRenderToUserHeader)
 	if err != nil {
@@ -62,8 +62,8 @@ func (user *User) Follow(userId string) bool {
 }
 
 // Unfollow unfollows one user by user id.
-func (user *User) Unfollow(userId string) bool {
-	urlPath := fmt.Sprintf(path.Unfollow, userId)
+func (user *User) Unfollow(userID string) bool {
+	urlPath := fmt.Sprintf(path.Unfollow, userID)
 
 	resp, err := user.delete(urlPath, iCRenderToUserHeader)
 	if err != nil {
