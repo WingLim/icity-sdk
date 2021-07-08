@@ -1,6 +1,6 @@
-# iCity Go SDK
+# iCity SDK
 
-基于 Golang 的 iCity SDK
+一个基于 Golang 的 iCity SDK。
 
 ## 使用
 
