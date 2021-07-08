@@ -36,7 +36,7 @@ func generateHeaders(user *User) []Header {
 }
 
 // NewDiary creates a new diary with title, content and privacy.
-func (user *User) NewDiary(title, content string, privacy Privacy) (newResp Response) {
+func (user *User) NewDiary(title, content string, privacy DiaryPrivacy) (newResp Response) {
 	postData := url.Values{}
 	postData.Set(data.TitleKEY, title)
 	postData.Set(data.CommentKEY, content)

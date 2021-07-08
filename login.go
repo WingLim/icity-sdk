@@ -150,6 +150,11 @@ func Login(username, password string, saveCookies bool) *User {
 		log.Error(err)
 		return nil
 	}
+	err = user.getUserSettingsPrivacy()
+	if err != nil {
+		log.Error(err)
+		return nil
+	}
 	return user
 }
 

@@ -8,14 +8,14 @@ import (
 	"github.com/WingLim/icity-sdk/log"
 )
 
-type Privacy int
+type DiaryPrivacy int
 
-func (p Privacy) String() string {
+func (p DiaryPrivacy) String() string {
 	return fmt.Sprintf("%d", p)
 }
 
 const (
-	Public Privacy = iota + 1
+	Public DiaryPrivacy = iota + 1
 	OnlyFriend
 	Private
 )

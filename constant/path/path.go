@@ -32,4 +32,5 @@ const (
 const (
 	SETTINGSINDEX = "/settings/user/index"
 	SOCIAL        = "/settings/user/social"
+	PRIVACY       = "/settings/user/privacy"
 )
