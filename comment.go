@@ -16,7 +16,7 @@ import (
 )
 
 type Comment struct {
-	Username string
+	Nickname string
 	UserId   string
 	Content  string
 	Date     time.Time
@@ -83,7 +83,7 @@ func parseComment(s *goquery.Selection) Comment {
 
 	user := s.Find(selector.DiaryNickname).Text()
 	nameArr := strings.Split(user, "@")
-	comment.Username = nameArr[0]
+	comment.Nickname = nameArr[0]
 	comment.UserId = nameArr[1]
 	comment.Content = s.Find(selector.DiaryContent).Text()
 	date, _ := s.Find(selector.CommentDate).Attr("datetime")
