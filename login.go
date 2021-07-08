@@ -63,7 +63,7 @@ func (user *User) checkLoginStatus() bool {
 		return false
 	}
 
-	text := doc.Find(selector.WORLD).Text()
+	text := doc.Find(selector.World).Text()
 	if text != "World" {
 		return false
 	}

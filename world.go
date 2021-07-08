@@ -16,7 +16,7 @@ func (user *User) GetWorld() []Diary {
 
 	var diaries []Diary
 
-	doc.Find(selector.WorldDiarys).Each(func(i int, s *goquery.Selection) {
+	doc.Find(selector.WorldDiaries).Each(func(i int, s *goquery.Selection) {
 		diaries = append(diaries, parseDiary(s))
 	})
 
