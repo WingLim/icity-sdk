@@ -15,8 +15,8 @@ func closeBody(body io.ReadCloser) {
 	}
 }
 
-func saveCookiesToFile(cookies []*http.Cookie) error {
-	f, err := os.Create("cookies.json")
+func saveCookiesToFile(cookies []*http.Cookie, filepath string) error {
+	f, err := os.Create(filepath)
 	if err != nil {
 		return err
 	}
@@ -30,8 +30,8 @@ func saveCookiesToFile(cookies []*http.Cookie) error {
 	return nil
 }
 
-func readCookiesFromFile() []*http.Cookie {
-	f, err := os.Open("cookies.json")
+func readCookiesFromFile(filepath string) []*http.Cookie {
+	f, err := os.Open(filepath)
 	if err != nil {
 		return nil
 	}

@@ -1,19 +1,24 @@
 package icity_sdk
 
+import "net/http"
+
 var (
 	defaultOption = &Options{
-		SaveCookies: false,
+		Cookies:     nil,
+		CookiesPath: "",
 	}
 )
 
 type Option func(*Options)
 
 type Options struct {
-	SaveCookies bool
+	Cookies     []*http.Cookie
+	CookiesPath string
 }
 
-func WithSaveCookies() Option {
+func WithSaveCookies(filepath string) Option {
 	return func(o *Options) {
-		o.SaveCookies = true
+		o.Cookies = readCookiesFromFile(filepath)
+		o.CookiesPath = filepath
 	}
 }

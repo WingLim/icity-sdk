@@ -6,7 +6,7 @@ import (
 )
 
 func login() *User {
-	return LoginWithConfig("config.json", WithSaveCookies())
+	return LoginWithConfig("config.json", WithSaveCookies("cookies.json"))
 }
 
 func TestUser_GetLoginToken(t *testing.T) {

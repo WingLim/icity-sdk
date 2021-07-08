@@ -75,13 +75,12 @@ func (user *User) login(opts []Option) *User {
 	for _, o := range opts {
 		o(opt)
 	}
-	if opt.SaveCookies {
-		cookies := readCookiesFromFile()
-		if len(cookies) == 0 {
+	if opt.Cookies != nil {
+		if len(opt.Cookies) == 0 {
 			goto doLogin
 		}
 		cookieUrl, _ := url.Parse(path.Home)
-		user.client.Jar.SetCookies(cookieUrl, cookies)
+		user.client.Jar.SetCookies(cookieUrl, opt.Cookies)
 		// If the cookies is expired, then login again.
 		if user.checkLoginStatus() {
 			return user
@@ -99,10 +98,10 @@ doLogin:
 	}
 	defer closeBody(resp.Body)
 
-	if opt.SaveCookies {
+	if opt.CookiesPath != "" {
 		cookieUrl, _ := url.Parse(path.Home)
 		cookies := user.client.Jar.Cookies(cookieUrl)
-		if err = saveCookiesToFile(cookies); err != nil {
+		if err = saveCookiesToFile(cookies, opt.CookiesPath); err != nil {
 			log.Error(err)
 			return nil
 		}
