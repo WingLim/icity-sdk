@@ -17,7 +17,7 @@ const (
 	LIKE   = "/a/%s/like"
 	UNLIKE = "/a/%s/unlike"
 
-	SETPRIVACY = "/a/%s/set_privacy?user_privacy=%d"
+	DIARYPRIVACY = "/a/%s/set_privacy?user_privacy=%d"
 
 	NEWCOMMENT    = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
 	DELETECOMMENT = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2B%s"

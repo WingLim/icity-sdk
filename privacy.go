@@ -35,18 +35,18 @@ func (user *User) setPrivacy(urlPath string) bool {
 
 // SetPublic sets diary privacy to Public.
 func (user *User) SetPublic(id string) bool {
-	urlPath := fmt.Sprintf(path.SETPRIVACY, id, Public)
+	urlPath := fmt.Sprintf(path.DIARYPRIVACY, id, Public)
 	return user.setPrivacy(urlPath)
 }
 
 // SetOnlyFriend sets diary privacy to OnlyFriend.
 func (user *User) SetOnlyFriend(id string) bool {
-	urlPath := fmt.Sprintf(path.SETPRIVACY, id, OnlyFriend)
+	urlPath := fmt.Sprintf(path.DIARYPRIVACY, id, OnlyFriend)
 	return user.setPrivacy(urlPath)
 }
 
 // SetPrivate sets diary privacy to Private.
 func (user *User) SetPrivate(id string) bool {
-	urlPath := fmt.Sprintf(path.SETPRIVACY, id, Private)
+	urlPath := fmt.Sprintf(path.DIARYPRIVACY, id, Private)
 	return user.setPrivacy(urlPath)
 }
