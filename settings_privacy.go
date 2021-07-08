@@ -16,8 +16,13 @@ func (i InvisibleType) String() string {
 }
 
 const (
+	// NotInvisible shows all your diaries to everyone.
 	NotInvisible InvisibleType = iota + 1
+
+	// ToStrangers shows your diaries to your friends.
 	ToStrangers
+
+	// ToAll show your diaries to yourself.
 	ToAll
 )
 
@@ -28,8 +33,13 @@ func (v ViewAccess) String() string {
 }
 
 const (
+	// Everyone means everyone on iCity have access.
 	Everyone ViewAccess = iota + 1
+
+	// Friend means only your friend have access.
 	Friend
+
+	// Self means only yourself have access.
 	Self
 )
 
@@ -40,21 +50,39 @@ func (w WorldType) String() string {
 }
 
 const (
+	// Show publishes your diary to world.
 	Show WorldType = iota
-	NoShow
+
+	// NotShow doesn't publish your diary to world.
+	NotShow
 )
 
 type SettingsPrivacy struct {
+	// DefaultPrivacy sets your new diary default access.
 	DefaultPrivacy DiaryPrivacy
-	InvisibleMode  InvisibleType
-	UnWorld        WorldType
 
-	AboutMe    ViewAccess
+	// InvisibleMode sets invisible mode.
+	InvisibleMode InvisibleType
+
+	// UnWorld sets if your diary publish to world
+	UnWorld WorldType
+
+	// AboutMe sets who can access your about me page.
+	AboutMe ViewAccess
+
+	// Followings sets who can access your followings list.
 	Followings ViewAccess
-	Followers  ViewAccess
 
+	// Followers sets who can access your followers list.
+	Followers ViewAccess
+
+	// AllowComment sets who can comment your diary.
 	AllowComment ViewAccess
-	AllowLike    ViewAccess
+
+	// Allow Like sets who can like your diary.
+	AllowLike ViewAccess
+
+	// AllowMessage sets who can send you private message.
 	AllowMessage ViewAccess
 }
 
@@ -73,6 +101,7 @@ func (user *User) doPrivacySettings(settings ...Setting) bool {
 	return false
 }
 
+// SetDefaultPrivacy sets DefaultPrivacy access.
 func (user *User) SetDefaultPrivacy(setting DiaryPrivacy) bool {
 	value := setting.String()
 	set := Setting{
@@ -89,6 +118,7 @@ func (user *User) SetDefaultPrivacy(setting DiaryPrivacy) bool {
 	return false
 }
 
+// SetInvisibleMode sets InvisibleMode.
 func (user *User) SetInvisibleMode(setting InvisibleType) bool {
 	value := setting.String()
 	set := Setting{
@@ -105,6 +135,7 @@ func (user *User) SetInvisibleMode(setting InvisibleType) bool {
 	return false
 }
 
+// SetUnWorld sets UnWorld type.
 func (user *User) SetUnWorld(setting WorldType) bool {
 	value := setting.String()
 	set := Setting{
@@ -121,6 +152,7 @@ func (user *User) SetUnWorld(setting WorldType) bool {
 	return false
 }
 
+// SetAboutMeAccess sets AboutMe access.
 func (user *User) SetAboutMeAccess(setting ViewAccess) bool {
 	value := setting.String()
 	set := Setting{
@@ -137,6 +169,7 @@ func (user *User) SetAboutMeAccess(setting ViewAccess) bool {
 	return false
 }
 
+// SetFollowingsAccess sets Followings access.
 func (user *User) SetFollowingsAccess(setting ViewAccess) bool {
 	value := setting.String()
 	set := Setting{
@@ -153,6 +186,7 @@ func (user *User) SetFollowingsAccess(setting ViewAccess) bool {
 	return false
 }
 
+// SetFollowersAccess sets Followers access.
 func (user *User) SetFollowersAccess(setting ViewAccess) bool {
 	value := setting.String()
 	set := Setting{
@@ -169,6 +203,7 @@ func (user *User) SetFollowersAccess(setting ViewAccess) bool {
 	return false
 }
 
+// SetAllowComment sets AllowComment access.
 func (user *User) SetAllowComment(setting ViewAccess) bool {
 	value := setting.String()
 	set := Setting{
@@ -185,6 +220,7 @@ func (user *User) SetAllowComment(setting ViewAccess) bool {
 	return false
 }
 
+// SetAllowLike sets AllowLike access.
 func (user *User) SetAllowLike(setting ViewAccess) bool {
 	value := setting.String()
 	set := Setting{
@@ -201,6 +237,7 @@ func (user *User) SetAllowLike(setting ViewAccess) bool {
 	return false
 }
 
+// SetAllowMessage sets AllowMessage access.
 func (user *User) SetAllowMessage(setting ViewAccess) bool {
 	value := setting.String()
 	set := Setting{
