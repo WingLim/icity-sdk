@@ -14,4 +14,7 @@ const (
 	DiaryContent  = "div.line > div.comment"
 	DiaryLocation = "div.line > span.location"
 	DiaryDate     = "div.meta > a.timeago > time"
+
+	Comments    = "div.cntr > div > div.cntr > ul > li.wu"
+	CommentDate = "time.hours"
 )
