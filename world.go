@@ -13,8 +13,10 @@ func parseDiary(s *goquery.Selection) Diary {
 
 	id, _ := s.Find(selector.DiaryId).Attr("href")
 	diary.ID = strings.Split(id, "/")[2]
-	diary.Nickname = s.Find(selector.DiaryNickname).Text()
-
+	user := s.Find(selector.DiaryNickname).Text()
+	nameArr := strings.Split(user, "@")
+	diary.Nickname = nameArr[0]
+	diary.UserId = nameArr[1]
 	diary.Title = s.Find(selector.DiaryTitle).Text()
 	diary.Content = s.Find(selector.DiaryContent).Text()
 	diary.Location = s.Find(selector.DiaryLocation).Text()
