@@ -16,7 +16,7 @@ var (
 		Value: "application/json, text/javascript, */*; q=0.01",
 	}
 
-	iCRenderToHeader = Header{
+	iCRenderToSelfHeader = Header{
 		Key:   "IC-Render-To",
 		Value: "self",
 	}

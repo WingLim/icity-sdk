@@ -91,7 +91,7 @@ func (user *User) DeleteDiary(diaryId string) (deleteResp Response) {
 func (user *User) Like(diaryId string) bool {
 	urlPath := fmt.Sprintf(path.LIKE, diaryId)
 
-	resp, err := user.post(urlPath, "", nil, iCRenderToHeader)
+	resp, err := user.post(urlPath, "", nil, iCRenderToSelfHeader)
 	if err != nil {
 		log.Println(err)
 		return false
@@ -108,7 +108,7 @@ func (user *User) Like(diaryId string) bool {
 func (user *User) UnLike(diaryId string) bool {
 	urlPath := fmt.Sprintf(path.UNLIKE, diaryId)
 
-	resp, err := user.delete(urlPath, iCRenderToHeader)
+	resp, err := user.delete(urlPath, iCRenderToSelfHeader)
 	if err != nil {
 		log.Println(err)
 		return false
