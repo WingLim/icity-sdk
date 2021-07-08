@@ -32,11 +32,11 @@ func (user *User) GetWorld() []Diary {
 		return nil
 	}
 
-	var diarys []Diary
+	var diaries []Diary
 
 	doc.Find(selector.WorldDiarys).Each(func(i int, s *goquery.Selection) {
-		diarys = append(diarys, parseDiary(s))
+		diaries = append(diaries, parseDiary(s))
 	})
 
-	return diarys
+	return diaries
 }

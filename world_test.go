@@ -8,6 +8,6 @@ import (
 func TestGetWorld(t *testing.T) {
 	user := login()
 
-	diarys := user.GetWorld()
-	assert.Len(t, diarys, 25)
+	diaries := user.GetWorld()
+	assert.Len(t, diaries, 25)
 }
