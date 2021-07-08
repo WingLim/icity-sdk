@@ -104,8 +104,8 @@ user.Unlike(diaryID string) bool
 type Comment struct {
 	// 发布评论的用户的昵称
 	Nickname string
-	// 用户
-	UserId   string
+	// 用户 ID
+	UserID   string
 	// 评论内容
 	Content  string 
 	// 发布时间
@@ -159,6 +159,8 @@ type User struct {
 	// 用户密码
 	Password string
 	
+	// 用户 ID
+	UserID   string
 	// 昵称
 	Nickname string
 	// 关于我
