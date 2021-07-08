@@ -8,12 +8,12 @@ const (
 
 const (
 	WorldDiarys   = "ul.posts-list li.wu"
-	DiaryId       = "div.meta > a.timeago"
-	DiaryNickname = "div.line > a"
+	DiaryId       = "a.timeago"
+	DiaryNickname = "a.user"
 	DiaryTitle    = "div.line > h4 > a"
-	DiaryContent  = "div.line > div.comment"
-	DiaryLocation = "div.line > span.location"
-	DiaryDate     = "div.meta > a.timeago > time"
+	DiaryContent  = "div.comment"
+	DiaryLocation = "span.location"
+	DiaryDate     = "time.timeago"
 
 	Comments    = "div.cntr > div > div.cntr > ul > li.wu"
 	CommentDate = "time.hours"
