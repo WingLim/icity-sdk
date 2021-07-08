@@ -2,8 +2,10 @@ package icity_sdk
 
 import (
 	"fmt"
-	"github.com/WingLim/icity-sdk/constant/path"
 	"net/http"
+
+	"github.com/WingLim/icity-sdk/constant/path"
+	"github.com/WingLim/icity-sdk/log"
 )
 
 type Privacy int
@@ -22,6 +24,7 @@ func (user *User) setPrivacy(urlPath string) bool {
 	headers := generateHeaders(user)
 	resp, err := user.post(urlPath, "", nil, headers...)
 	if err != nil {
+		log.Error(err)
 		return false
 	}
 	if resp.StatusCode == http.StatusFound {

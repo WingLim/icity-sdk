@@ -3,14 +3,15 @@ package icity_sdk
 import (
 	"encoding/json"
 	"io"
-	"log"
 	"net/http"
 	"os"
+
+	"github.com/WingLim/icity-sdk/log"
 )
 
 func closeBody(body io.ReadCloser) {
 	if err := body.Close(); err != nil {
-		log.Fatal(err)
+		log.Error(err)
 	}
 }
 
@@ -40,6 +41,7 @@ func readCookiesFromFile() []*http.Cookie {
 	decoder := json.NewDecoder(f)
 	err = decoder.Decode(&cookies)
 	if err != nil {
+		log.Error(err)
 		return nil
 	}
 	return cookies

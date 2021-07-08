@@ -2,14 +2,15 @@ package icity_sdk
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"net/url"
+	"os"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/WingLim/icity-sdk/constant/data"
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
+	"github.com/WingLim/icity-sdk/log"
 )
 
 func (user *User) getLoginToken() string {
@@ -27,6 +28,7 @@ func (user *User) getLoginToken() string {
 func (user *User) getCSRFToken() string {
 	doc, err := user.getWithDoc("/")
 	if err != nil {
+		log.Error(err)
 		return ""
 	}
 
@@ -59,11 +61,13 @@ func (user *User) buildLogoutData(token string) url.Values {
 func (user *User) checkLoginStatus() bool {
 	resp, err := user.get(path.WORLD)
 	if err != nil {
+		log.Error(err)
 		return false
 	}
 
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
 	if err != nil {
+		log.Error(err)
 		return false
 	}
 
@@ -94,7 +98,8 @@ doLogin:
 
 	resp, err := user.postForm(path.SIGNIN, postData)
 	if err != nil {
-		log.Fatal(err)
+		log.Error(err)
+		return nil
 	}
 	defer closeBody(resp.Body)
 
@@ -102,6 +107,7 @@ doLogin:
 		cookieUrl, _ := url.Parse(path.HOME)
 		cookies := user.client.Jar.Cookies(cookieUrl)
 		if err = saveCookiesToFile(cookies); err != nil {
+			log.Error(err)
 			return nil
 		}
 	}
@@ -134,7 +140,17 @@ func (user *User) logout() error {
 // then will login to iCity with exists cookies.
 func Login(username, password string, saveCookies bool) *User {
 	user := NewUser(username, password)
-	return user.login(saveCookies)
+	user = user.login(saveCookies)
+	if user == nil {
+		log.Infof("fail to log in")
+		os.Exit(1)
+	}
+	err := user.getUserInfo()
+	if err != nil {
+		log.Error(err)
+		return nil
+	}
+	return user
 }
 
 // Logout logouts user from iCity

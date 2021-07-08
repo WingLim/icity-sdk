@@ -2,10 +2,11 @@ package icity_sdk
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/WingLim/icity-sdk/constant/path"
+	"github.com/WingLim/icity-sdk/constant/selector"
+	"github.com/WingLim/icity-sdk/log"
 )
 
 type User struct {
@@ -31,7 +32,7 @@ func (user *User) Follow(userId string) bool {
 
 	resp, err := user.post(urlPath, "", nil, iCRenderToUserHeader)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return false
 	}
 
@@ -47,7 +48,7 @@ func (user *User) UnFollow(userId string) bool {
 
 	resp, err := user.delete(urlPath, iCRenderToUserHeader)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return false
 	}
 
@@ -55,4 +56,16 @@ func (user *User) UnFollow(userId string) bool {
 		return true
 	}
 	return false
+}
+
+func (user *User) getUserInfo() error {
+	doc, err := user.getWithDoc(path.SETTINGSINDEX)
+	if err != nil {
+		return err
+	}
+
+	user.Nickname, _ = doc.Find(selector.NICKNAME).Attr("value")
+	user.Bio = doc.Find(selector.BIO).Text()
+	user.Location, _ = doc.Find(selector.LOCATION).Attr("value")
+	return nil
 }

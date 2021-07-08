@@ -4,13 +4,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/url"
 	"time"
 
 	"github.com/WingLim/icity-sdk/constant/data"
 	"github.com/WingLim/icity-sdk/constant/path"
+	"github.com/WingLim/icity-sdk/log"
 )
 
 type Diary struct {
@@ -45,7 +45,7 @@ func (user *User) NewDiary(title, content string, privacy Privacy) (newResp Resp
 	headers := generateHeaders(user)
 	resp, err := user.postForm(path.NEWDIARY, postData, headers...)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	defer closeBody(resp.Body)
@@ -53,7 +53,7 @@ func (user *User) NewDiary(title, content string, privacy Privacy) (newResp Resp
 	res, _ := io.ReadAll(resp.Body)
 	err = json.Unmarshal(res, &newResp)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	return
@@ -66,7 +66,7 @@ func (user *User) DeleteDiary(diaryId string) (deleteResp Response) {
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	defer closeBody(resp.Body)
@@ -74,7 +74,7 @@ func (user *User) DeleteDiary(diaryId string) (deleteResp Response) {
 	res, _ := io.ReadAll(resp.Body)
 	err = json.Unmarshal(res, &deleteResp)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	return
@@ -86,7 +86,7 @@ func (user *User) Like(diaryId string) bool {
 
 	resp, err := user.post(urlPath, "", nil, iCRenderToSelfHeader)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return false
 	}
 	defer closeBody(resp.Body)
@@ -103,7 +103,7 @@ func (user *User) UnLike(diaryId string) bool {
 
 	resp, err := user.delete(urlPath, iCRenderToSelfHeader)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return false
 	}
 	defer closeBody(resp.Body)

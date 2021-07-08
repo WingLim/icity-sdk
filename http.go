@@ -3,7 +3,6 @@ package icity_sdk
 import (
 	"fmt"
 	"io"
-	"log"
 	"net/http"
 	"net/http/cookiejar"
 	"net/url"
@@ -11,6 +10,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/WingLim/icity-sdk/constant/path"
+	"github.com/WingLim/icity-sdk/log"
 )
 
 type Response struct {
@@ -84,7 +84,7 @@ func (user *User) getWithDoc(urlPath string, headers ...Header) (*goquery.Docume
 func (user *User) initClient() {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
-		log.Fatal(err)
+		log.Error(err)
 	}
 	user.client.Jar = jar
 	user.client.CheckRedirect = func(req *http.Request, via []*http.Request) error {

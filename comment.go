@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"log"
 	"net/url"
 	"time"
 
@@ -12,6 +11,7 @@ import (
 	"github.com/WingLim/icity-sdk/constant/data"
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
+	"github.com/WingLim/icity-sdk/log"
 )
 
 type Comment struct {
@@ -43,7 +43,7 @@ func (user *User) NewComment(diaryId, comment string) (newResp Response) {
 
 	err = json.Unmarshal(res, &newResp)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	return
@@ -56,7 +56,7 @@ func (user *User) DeleteComment(commentId, diaryId string) (deleteResp Response)
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	defer closeBody(resp.Body)
@@ -64,7 +64,7 @@ func (user *User) DeleteComment(commentId, diaryId string) (deleteResp Response)
 	res, _ := io.ReadAll(resp.Body)
 	err = json.Unmarshal(res, &deleteResp)
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 		return
 	}
 	return
@@ -83,6 +83,7 @@ func (user *User) GetComments(diaryId string) []Comment {
 
 	doc, err := user.getWithDoc(urlPath, iCRenderToRepliesHeader)
 	if err != nil {
+		log.Error(err)
 		return nil
 	}
 
