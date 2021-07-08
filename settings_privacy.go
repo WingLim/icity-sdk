@@ -12,6 +12,19 @@ import (
 type InvisibleType int
 
 func (i InvisibleType) String() string {
+	switch i {
+	case NotInvisible:
+		return "NotInvisible"
+	case ToStrangers:
+		return "ToStrangers"
+	case ToAll:
+		return "ToAll"
+	default:
+		return "Unknown"
+	}
+}
+
+func (i InvisibleType) Data() string {
 	return fmt.Sprintf("%d", i)
 }
 
@@ -29,6 +42,19 @@ const (
 type ViewAccess int
 
 func (v ViewAccess) String() string {
+	switch v {
+	case Everyone:
+		return "Everyone"
+	case Friend:
+		return "Friend"
+	case Self:
+		return "Self"
+	default:
+		return "Unknown"
+	}
+}
+
+func (v ViewAccess) Data() string {
 	return fmt.Sprintf("%d", v)
 }
 
@@ -46,6 +72,17 @@ const (
 type WorldType int
 
 func (w WorldType) String() string {
+	switch w {
+	case Show:
+		return "Shown"
+	case NotShow:
+		return "NotShow"
+	default:
+		return "Unknown"
+	}
+}
+
+func (w WorldType) Data() string {
 	return fmt.Sprintf("%d", w)
 }
 
@@ -120,7 +157,7 @@ func (user *User) SetDefaultPrivacy(setting DiaryPrivacy) bool {
 
 // SetInvisibleMode sets InvisibleMode.
 func (user *User) SetInvisibleMode(setting InvisibleType) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.Privacy,
 		Value: value,
@@ -137,7 +174,7 @@ func (user *User) SetInvisibleMode(setting InvisibleType) bool {
 
 // SetUnWorld sets UnWorld type.
 func (user *User) SetUnWorld(setting WorldType) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.UnWorld,
 		Value: value,
@@ -154,7 +191,7 @@ func (user *User) SetUnWorld(setting WorldType) bool {
 
 // SetAboutMeAccess sets AboutMe access.
 func (user *User) SetAboutMeAccess(setting ViewAccess) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.AboutMe,
 		Value: value,
@@ -171,7 +208,7 @@ func (user *User) SetAboutMeAccess(setting ViewAccess) bool {
 
 // SetFollowingsAccess sets Followings access.
 func (user *User) SetFollowingsAccess(setting ViewAccess) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.Followings,
 		Value: value,
@@ -188,7 +225,7 @@ func (user *User) SetFollowingsAccess(setting ViewAccess) bool {
 
 // SetFollowersAccess sets Followers access.
 func (user *User) SetFollowersAccess(setting ViewAccess) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.Followers,
 		Value: value,
@@ -205,7 +242,7 @@ func (user *User) SetFollowersAccess(setting ViewAccess) bool {
 
 // SetAllowComment sets AllowComment access.
 func (user *User) SetAllowComment(setting ViewAccess) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.AllowComment,
 		Value: value,
@@ -222,7 +259,7 @@ func (user *User) SetAllowComment(setting ViewAccess) bool {
 
 // SetAllowLike sets AllowLike access.
 func (user *User) SetAllowLike(setting ViewAccess) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.AllowLike,
 		Value: value,
@@ -239,7 +276,7 @@ func (user *User) SetAllowLike(setting ViewAccess) bool {
 
 // SetAllowMessage sets AllowMessage access.
 func (user *User) SetAllowMessage(setting ViewAccess) bool {
-	value := setting.String()
+	value := setting.Data()
 	set := Setting{
 		Key:   data.AllowMessage,
 		Value: value,

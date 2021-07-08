@@ -11,6 +11,19 @@ import (
 type DiaryPrivacy int
 
 func (p DiaryPrivacy) String() string {
+	switch p {
+	case Public:
+		return "Public"
+	case OnlyFriend:
+		return "OnlyFriend"
+	case Private:
+		return "Private"
+	default:
+		return "Unknown"
+	}
+}
+
+func (p DiaryPrivacy) Data() string {
 	return fmt.Sprintf("%d", p)
 }
 

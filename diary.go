@@ -40,7 +40,7 @@ func (user *User) NewDiary(title, content string, privacy DiaryPrivacy) (newResp
 	postData := url.Values{}
 	postData.Set(data.TitleKEY, title)
 	postData.Set(data.CommentKEY, content)
-	postData.Set(data.PrivacyKEY, privacy.String())
+	postData.Set(data.PrivacyKEY, privacy.Data())
 
 	headers := generateHeaders(user)
 	resp, err := user.postForm(path.NEWDIARY, postData, headers...)
