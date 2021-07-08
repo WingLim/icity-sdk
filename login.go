@@ -70,8 +70,12 @@ func (user *User) checkLoginStatus() bool {
 	return true
 }
 
-func (user *User) login(saveCookies bool) *User {
-	if saveCookies {
+func (user *User) login(opts []Option) *User {
+	opt := defaultOption
+	for _, o := range opts {
+		o(opt)
+	}
+	if opt.SaveCookies {
 		cookies := readCookiesFromFile()
 		if len(cookies) == 0 {
 			goto doLogin
@@ -95,7 +99,7 @@ doLogin:
 	}
 	defer closeBody(resp.Body)
 
-	if saveCookies {
+	if opt.SaveCookies {
 		cookieUrl, _ := url.Parse(path.Home)
 		cookies := user.client.Jar.Cookies(cookieUrl)
 		if err = saveCookiesToFile(cookies); err != nil {
@@ -130,9 +134,9 @@ func (user *User) logout() error {
 // Login logins user to iCity.
 // If set true to saveCookies, then will write cookies to cookies.json,
 // then will login to iCity with exists cookies.
-func Login(username, password string, saveCookies bool) *User {
+func Login(username, password string, opts ...Option) *User {
 	user := NewUser(username, password)
-	user = user.login(saveCookies)
+	user = user.login(opts)
 	if user == nil {
 		log.Infof("fail to log in")
 		os.Exit(1)
@@ -150,13 +154,13 @@ func Login(username, password string, saveCookies bool) *User {
 	return user
 }
 
-func LoginWithConfig(filepath string, saveCookies bool) *User {
+func LoginWithConfig(filepath string, opts ...Option) *User {
 	config, err := ReadConfig(filepath)
 	if err != nil {
 		log.Error(err)
 		return nil
 	}
-	return Login(config.Username, config.Password, saveCookies)
+	return Login(config.Username, config.Password, opts...)
 }
 
 // Logout logouts user from iCity

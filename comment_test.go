@@ -9,17 +9,24 @@ import (
 func TestUser_NewComment(t *testing.T) {
 	user := login()
 
-	diaryId := "ou4yza9"
+	diaryResp := user.NewDiary("", "for test", Private)
+	diaryId := diaryResp.ActivityToken
 	comment := "hey boy!"
 	resp := user.NewComment(diaryId, comment)
 	assert.True(t, resp.Success)
 	assert.NotZero(t, resp.ActivityToken)
+
+	t.Cleanup(func() {
+		user.DeleteComment(resp.ActivityToken, diaryId)
+		user.DeleteDiary(diaryId)
+	})
 }
 
 func TestUser_DeleteComment(t *testing.T) {
 	user := login()
 
-	diaryId := "ou4yza9"
+	diaryResp := user.NewDiary("", "for test", Private)
+	diaryId := diaryResp.ActivityToken
 	comment := "hey boy!"
 	newResp := user.NewComment(diaryId, comment)
 	assert.True(t, newResp.Success)
@@ -29,6 +36,10 @@ func TestUser_DeleteComment(t *testing.T) {
 	deleteResp := user.DeleteComment(commentId, diaryId)
 	assert.True(t, deleteResp.Success)
 	assert.Equal(t, commentId, deleteResp.ActivityToken)
+
+	t.Cleanup(func() {
+		user.DeleteDiary(diaryId)
+	})
 }
 
 func TestUser_ReplyComment(t *testing.T) {
@@ -42,7 +53,9 @@ func TestUser_ReplyComment(t *testing.T) {
 	assert.True(t, resp.Success)
 	assert.NotZero(t, resp.ActivityToken)
 
-	_ = user.DeleteComment(resp.ActivityToken, diaryId)
+	t.Cleanup(func() {
+		user.DeleteComment(resp.ActivityToken, diaryId)
+	})
 }
 
 func TestUser_GetComments(t *testing.T) {

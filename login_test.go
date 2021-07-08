@@ -8,7 +8,7 @@ import (
 )
 
 func login() *User {
-	return LoginWithConfig("config.json", true)
+	return LoginWithConfig("config.json", WithSaveCookies())
 }
 
 func TestUser_GetLoginToken(t *testing.T) {
@@ -40,7 +40,7 @@ func TestLogin(t *testing.T) {
 func TestLoginWithConfig(t *testing.T) {
 	filepath := "config.json"
 
-	user := LoginWithConfig(filepath, false)
+	user := LoginWithConfig(filepath)
 	assert.NotNil(t, user)
 	assert.NotZero(t, user.UserID)
 }
