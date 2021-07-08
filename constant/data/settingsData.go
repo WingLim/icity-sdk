@@ -31,3 +31,15 @@ const (
 	Link2Key     = "user[info][link_2]"
 	Link3Key     = "user[info][link_3]"
 )
+
+const (
+	DefaultPrivacy = "user[settings][default_privacy]"
+	Privacy        = "user[settings][privacy]"
+	UnWorld        = "user[settings][user_unworld]"
+	AboutMe        = "user[settings][privacy_about_me]"
+	Followings     = "user[settings][privacy_followings]"
+	Followers      = "user[settings][privacy_followers]"
+	AllowComment   = "user[settings][privacy_allow_comment]"
+	AllowLike      = "user[settings][privacy_allow_like]"
+	AllowMessage   = "user[settings][privacy_allow_message]"
+)

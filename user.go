@@ -34,8 +34,8 @@ func NewUser(username, password string) *User {
 			InvisibleMode:  NotInvisible,
 			UnWorld:        Show,
 			AboutMe:        Everyone,
-			FollowingsList: Everyone,
-			FollowersList:  Everyone,
+			Followings:     Everyone,
+			Followers:      Everyone,
 			AllowComment:   Everyone,
 			AllowLike:      Everyone,
 			AllowMessage:   Everyone,
@@ -117,12 +117,12 @@ func (user *User) getUserSettingsPrivacy() error {
 
 	if v, exists := doc.Find(selector.SettingsFollowings).Attr("value"); exists {
 		value, _ := strconv.Atoi(v)
-		user.SettingsPrivacy.FollowingsList = ViewAccess(value)
+		user.SettingsPrivacy.Followings = ViewAccess(value)
 	}
 
 	if v, exists := doc.Find(selector.SettingsFollowers).Attr("value"); exists {
 		value, _ := strconv.Atoi(v)
-		user.SettingsPrivacy.FollowersList = ViewAccess(value)
+		user.SettingsPrivacy.Followers = ViewAccess(value)
 	}
 
 	if v, exists := doc.Find(selector.SettingsAllowComment).Attr("value"); exists {
