@@ -20,6 +20,6 @@ const (
 	SETPRIVACY = "/a/%s/set_privacy?user_privacy=%d"
 
 	NEWCOMMENT    = "/activities?act_id=101&re_id=icty%%2Bactivity%%2B%s"
-	DELETECOMMENT = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2Bou4yza9"
+	DELETECOMMENT = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2B%s"
 	GETCOMMENTS   = "/a/%s/expand"
 )

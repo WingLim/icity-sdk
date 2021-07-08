@@ -25,10 +25,10 @@ func TestUser_DeleteComment(t *testing.T) {
 	assert.True(t, newResp.Success)
 	assert.NotZero(t, newResp.ActivityToken)
 
-	id := newResp.ActivityToken
-	deleteResp := user.DeleteComment(id)
+	commentId := newResp.ActivityToken
+	deleteResp := user.DeleteComment(commentId, diaryId)
 	assert.True(t, deleteResp.Success)
-	assert.Equal(t, id, deleteResp.ActivityToken)
+	assert.Equal(t, commentId, deleteResp.ActivityToken)
 }
 
 func TestUser_ReplyComment(t *testing.T) {
