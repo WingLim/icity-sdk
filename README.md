@@ -18,12 +18,12 @@ func main() {
 ## API
 
 ### 登陆/登出
-1. 登陆
+- 登陆
 ```go
 Login(username, password string, saveCookies bool) *User
 ```
 
-2. 登出
+- 登出
 ```go
 Logout(user *User) error
 ```
@@ -62,7 +62,7 @@ const (
 )
 ```
 
-1. 发布日记
+- 发布日记
 ```go
 user.NewDiary(title, content string, privacy DiaryPrivacy) Response
 
@@ -73,7 +73,7 @@ Response.Success
 Response.ActivityToken
 ```
 
-2. 删除日记
+- 删除日记
 ```go
 user.DeleteDiary(diaryID string) Response
 
@@ -84,14 +84,14 @@ Response.Success
 Response.ActivityToken
 ```
 
-3. 喜欢日记
+- 喜欢日记
 ```go
 // true: 成功
 // false: 失败
 user.Like(diaryID string) bool
 ```
 
-4. 取消喜欢
+- 取消喜欢
 ```go
 // true: 成功
 // false: 失败 
@@ -113,7 +113,7 @@ type Comment struct {
 }
 ```
 
-1. 发布评论
+- 发布评论
 ```go
 user.NewComment(diaryID, comment string) Response
 
@@ -124,7 +124,7 @@ Response.Success
 Response.ActivityToken
 ```
 
-2. 删除评论
+- 删除评论
 ```go
 user.DeleteComment(commentID, diaryID string) Response
 
@@ -135,7 +135,7 @@ Response.Success
 Response.ActivityToken
 ```
 
-3. 回复评论
+- 回复评论
 ```go
 user.ReplyComment(userID, diaryID, comment string) Response
 
@@ -146,7 +146,7 @@ Response.Success
 Response.ActivityToken
 ```
 
-4. 获取评论
+- 获取评论
 ```go
 user.GetComments(diaryID string) []Comment
 ```
@@ -171,21 +171,21 @@ type User struct {
 }
 ```
 
-1. 设置昵称
+- 设置昵称
 ```go
 // true: 成功
 // false: 失败 
 user.SetNickName(nickname string) bool
 ```
 
-2. 设置简介
+- 设置简介
 ```go
 // true: 成功
 // false: 失败 
 user.SetBio(bio string) bool
 ```
 
-3. 设置所在地
+- 设置所在地
 ```go
 // true: 成功
 // false: 失败 
@@ -193,7 +193,7 @@ user.SetLocation(location string) bool
 ```
 
 ### 社交账号
-1. 微博
+- 微博
 ```go
 // true: 成功
 // false: 失败 
