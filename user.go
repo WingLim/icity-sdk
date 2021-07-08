@@ -13,6 +13,10 @@ type User struct {
 	Username string
 	Password string
 
+	Nickname string
+	Bio      string
+	Location string
+
 	client http.Client
 }
 

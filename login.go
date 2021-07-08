@@ -38,21 +38,21 @@ func (user *User) getCSRFToken() string {
 	return ""
 }
 
-func (user *User) buildLoginData(token string) url.Values {
+func buildLoginData(username, password, token string) url.Values {
 	postData := url.Values{}
 	postData.Set(data.Utf8KEY, data.DefaultUtf8)
 	postData.Set(data.TokenKEY, token)
-	postData.Set(data.UsernameKEY, user.Username)
-	postData.Set(data.PasswordKEY, user.Password)
+	postData.Set(data.UsernameKEY, username)
+	postData.Set(data.PasswordKEY, password)
 	postData.Set(data.CommitKEY, data.DefaultCommit)
 	postData.Add(data.RememberKEY, "0")
 	postData.Add(data.RememberKEY, data.DefaultRemember)
 	return postData
 }
 
-func (user *User) buildLogoutData(token string) url.Values {
+func buildLogoutData(token string) url.Values {
 	postData := url.Values{}
-	postData.Set(data.MethodKEY, data.DefaultMethod)
+	postData.Set(data.MethodKEY, "delete")
 	postData.Set(data.TokenKEY, token)
 	return postData
 }
@@ -94,7 +94,7 @@ func (user *User) login(saveCookies bool) *User {
 
 doLogin:
 	token := user.getLoginToken()
-	postData := user.buildLoginData(token)
+	postData := buildLoginData(user.Username, user.Password, token)
 
 	resp, err := user.postForm(path.SIGNIN, postData)
 	if err != nil {
@@ -121,7 +121,7 @@ doLogin:
 
 func (user *User) logout() error {
 	token := user.getCSRFToken()
-	postData := user.buildLogoutData(token)
+	postData := buildLogoutData(token)
 
 	resp, err := user.postForm(path.SIGNOUT, postData, refererHeader(path.HOME+"/"))
 	if err != nil {

@@ -18,11 +18,8 @@ const (
 	DefaultRemember = "1"
 )
 
-// For logout
 const (
 	MethodKEY = "_method"
-
-	DefaultMethod = "delete"
 )
 
 // For send diary
@@ -30,4 +27,10 @@ const (
 	TitleKEY   = "activity[data][title]"
 	CommentKEY = "activity[data][comment]"
 	PrivacyKEY = "activity[data][user_privacy]"
+)
+
+const (
+	NicknameKey = "user[nickname]"
+	BioKey      = "user[info][bio]"
+	LocationKey = "user[info][location]"
 )

@@ -4,6 +4,10 @@ const (
 	LoginToken = "input[name=authenticity_token]"
 	CSRFToken  = "meta[name=csrf-token]"
 	WORLD      = "body > div.container.below-top-navbar > div > div.box-head > h2"
+
+	NICKNAME = "#user_nickname"
+	BIO      = "#user_info_bio"
+	LOCATION = "#user_info_location"
 )
 
 const (

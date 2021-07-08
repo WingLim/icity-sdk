@@ -28,3 +28,7 @@ const (
 	FOLLOW   = "/u/%s/follow"
 	UNFOLLOW = "/u/%s/unfollow"
 )
+
+const (
+	SETTINGSINDEX = "/settings/user/index"
+)
