@@ -24,14 +24,6 @@ type Diary struct {
 	Date     time.Time
 }
 
-type Response struct {
-	// Success is operation status.
-	Success bool `json:"success"`
-
-	// ActivityToken is the id of diary.
-	ActivityToken string `json:"activity_token"`
-}
-
 // generateHeaders generates some headers for make sure we can have
 // correct response from iCity.
 func generateHeaders(user *User) []Header {

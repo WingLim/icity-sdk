@@ -13,6 +13,14 @@ import (
 	"github.com/WingLim/icity-sdk/constant/path"
 )
 
+type Response struct {
+	// Success is operation status.
+	Success bool `json:"success"`
+
+	// ActivityToken is the id of diary.
+	ActivityToken string `json:"activity_token"`
+}
+
 const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
 
 func (user *User) do(req *http.Request, headers ...Header) (resp *http.Response, err error) {
