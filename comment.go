@@ -51,8 +51,8 @@ func (user *User) NewComment(diaryId, comment string) (newResp Response) {
 }
 
 // DeleteComment deletes a comment by comment id.
-func (user *User) DeleteComment(commentId string) (deleteResp Response) {
-	urlPath := fmt.Sprintf(path.DELETECOMMENT, commentId)
+func (user *User) DeleteComment(commentId, diaryId string) (deleteResp Response) {
+	urlPath := fmt.Sprintf(path.DELETECOMMENT, commentId, diaryId)
 
 	headers := generateHeaders(user)
 	resp, err := user.delete(urlPath, headers...)
