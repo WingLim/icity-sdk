@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNewDiary(t *testing.T) {
+func TestUser_NewDiary(t *testing.T) {
 	user := login()
 
 	title := "Test"
@@ -16,7 +16,7 @@ func TestNewDiary(t *testing.T) {
 	assert.NotZero(t, resp.ActivityToken)
 }
 
-func TestDeleteDiary(t *testing.T) {
+func TestUser_DeleteDiary(t *testing.T) {
 	user := login()
 
 	title := "Test"
@@ -31,7 +31,7 @@ func TestDeleteDiary(t *testing.T) {
 	assert.Equal(t, deleteResp.ActivityToken, newResp.ActivityToken)
 }
 
-func TestLike(t *testing.T) {
+func TestUser_Like(t *testing.T) {
 	user := login()
 
 	title := "Test"
@@ -47,7 +47,7 @@ func TestLike(t *testing.T) {
 	_ = user.DeleteDiary(newResp.ActivityToken)
 }
 
-func TestUnLike(t *testing.T) {
+func TestUser_UnLike(t *testing.T) {
 	user := login()
 
 	title := "Test"

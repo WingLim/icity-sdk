@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetWorld(t *testing.T) {
+func TestUser_GetWorld(t *testing.T) {
 	user := login()
 
 	diaries := user.GetWorld()

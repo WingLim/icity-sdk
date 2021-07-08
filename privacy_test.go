@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestSetPrivacy(t *testing.T) {
+func TestUser_SetPrivacy(t *testing.T) {
 	user := login()
 
 	resp := user.NewDiary("", "hi", Public)

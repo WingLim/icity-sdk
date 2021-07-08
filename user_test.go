@@ -14,7 +14,7 @@ func TestUser_Follow(t *testing.T) {
 	assert.True(t, ok)
 }
 
-func TestUser_UnFollow(t *testing.T) {
+func TestUser_Unfollow(t *testing.T) {
 	user := login()
 
 	userId := "winglims"

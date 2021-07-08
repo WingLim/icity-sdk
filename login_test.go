@@ -11,14 +11,14 @@ func login() *User {
 	return Login(myUsername, myPassword, true)
 }
 
-func TestGetLoginToken(t *testing.T) {
+func TestUser_GetLoginToken(t *testing.T) {
 	user := NewUser("", "")
 
 	token := user.getLoginToken()
 	assert.NotZero(t, token)
 }
 
-func TestGetLogoutToken(t *testing.T) {
+func TestUser_GetCSRFToken(t *testing.T) {
 	user := login()
 
 	token := user.getCSRFToken()
