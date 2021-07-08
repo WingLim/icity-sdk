@@ -55,8 +55,8 @@ func (user *User) postForm(urlPath string, data url.Values, headers ...Header) (
 	return user.post(urlPath, "application/x-www-form-urlencoded", strings.NewReader(data.Encode()), headers...)
 }
 
-func (user *User) getWithDoc(urlPath string) (*goquery.Document, error) {
-	resp, err := user.get(urlPath)
+func (user *User) getWithDoc(urlPath string, headers ...Header) (*goquery.Document, error) {
+	resp, err := user.get(urlPath, headers...)
 	if err != nil {
 		return nil, err
 	}
