@@ -16,7 +16,7 @@ import (
 
 type Comment struct {
 	Nickname string
-	UserId   string
+	UserID   string
 	Content  string
 	Date     time.Time
 }

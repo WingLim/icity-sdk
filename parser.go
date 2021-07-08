@@ -34,7 +34,7 @@ func parseComment(s *goquery.Selection) Comment {
 	user := s.Find(selector.DiaryNickname).Text()
 	nameArr := strings.Split(user, "@")
 	comment.Nickname = nameArr[0]
-	comment.UserId = nameArr[1]
+	comment.UserID = nameArr[1]
 	comment.Content = s.Find(selector.DiaryContent).Text()
 	date, _ := s.Find(selector.CommentDate).Attr("datetime")
 	comment.Date, _ = time.Parse(timeLayout, date)
