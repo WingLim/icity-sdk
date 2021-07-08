@@ -25,3 +25,19 @@ func ReadConfig(filepath string) (config Config, err error) {
 
 	return config, nil
 }
+
+func WriteConfig(config *Config, filepath string) (err error) {
+	f, err := os.Create(filepath)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	encoder := json.NewEncoder(f)
+	err = encoder.Encode(config)
+	if err != nil {
+		return
+	}
+
+	return nil
+}
