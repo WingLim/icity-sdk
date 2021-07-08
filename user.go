@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
@@ -14,6 +15,7 @@ type User struct {
 	Username string
 	Password string
 
+	UserID   string
 	Nickname string
 	Bio      string
 	Location string
@@ -83,9 +85,12 @@ func (user *User) getUserInfo() error {
 		return err
 	}
 
-	user.Nickname, _ = doc.Find(selector.NICKNAME).Attr("value")
-	user.Bio = doc.Find(selector.BIO).Text()
-	user.Location, _ = doc.Find(selector.LOCATION).Attr("value")
+	href, _ := doc.Find(selector.UserID).Attr("href")
+	hrefArr := strings.Split(href, "/")
+	user.UserID = hrefArr[2]
+	user.Nickname, _ = doc.Find(selector.Nickname).Attr("value")
+	user.Bio = doc.Find(selector.Bio).Text()
+	user.Location, _ = doc.Find(selector.Location).Attr("value")
 	return nil
 }
 

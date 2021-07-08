@@ -3,15 +3,16 @@ package selector
 const (
 	LoginToken = "input[name=authenticity_token]"
 	CSRFToken  = "meta[name=csrf-token]"
-	WORLD      = "body > div.container.below-top-navbar > div > div.box-head > h2"
+	World      = "body > div.container.below-top-navbar > div > div.box-head > h2"
 
-	NICKNAME = "#user_nickname"
-	BIO      = "#user_info_bio"
-	LOCATION = "#user_info_location"
+	UserID   = "div.navbar.navbar-major.fixedsticky > div > ul > li:nth-child(4) > a"
+	Nickname = "#user_nickname"
+	Bio      = "#user_info_bio"
+	Location = "#user_info_location"
 )
 
 const (
-	WorldDiarys   = "ul.posts-list li.wu"
+	WorldDiaries  = "ul.posts-list li.wu"
 	DiaryId       = "a.timeago"
 	DiaryNickname = "a.user"
 	DiaryTitle    = "div.line > h4 > a"

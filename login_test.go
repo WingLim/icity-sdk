@@ -33,8 +33,8 @@ func TestLogin(t *testing.T) {
 	resp, err := user.get(path.World)
 	assert.Nil(t, err)
 	assert.Equal(t, resp.StatusCode, http.StatusOK)
-
 	assert.NotNil(t, user)
+	assert.NotZero(t, user.UserID)
 }
 
 func TestLogout(t *testing.T) {
