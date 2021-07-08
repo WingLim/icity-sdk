@@ -25,6 +25,11 @@ var (
 		Key:   "IC-Render-To",
 		Value: "replies",
 	}
+
+	iCRenderToUserHeader = Header{
+		Key:   "IC-Render-To",
+		Value: "user-header",
+	}
 )
 
 func refererHeader(value string) Header {

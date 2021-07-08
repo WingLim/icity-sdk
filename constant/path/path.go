@@ -23,3 +23,8 @@ const (
 	DELETECOMMENT = "/a/%s?act_id=101&re_id=icty%%2Bactivity%%2B%s"
 	GETCOMMENTS   = "/a/%s/expand"
 )
+
+const (
+	FOLLOW   = "/u/%s/follow"
+	UNFOLLOW = "/u/%s/unfollow"
+)
