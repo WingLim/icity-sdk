@@ -15,6 +15,7 @@ type User struct {
 	client http.Client
 }
 
+// NewUser creates a User instance.
 func NewUser(username, password string) *User {
 	user := &User{
 		Username: username,
@@ -24,6 +25,7 @@ func NewUser(username, password string) *User {
 	return user
 }
 
+// Follow follows one user by user id.
 func (user *User) Follow(userId string) bool {
 	urlPath := fmt.Sprintf(path.FOLLOW, userId)
 
@@ -39,6 +41,7 @@ func (user *User) Follow(userId string) bool {
 	return false
 }
 
+// UnFollow unfollows one user by user id.
 func (user *User) UnFollow(userId string) bool {
 	urlPath := fmt.Sprintf(path.UNFOLLOW, userId)
 
