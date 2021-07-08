@@ -4,8 +4,6 @@
 
 ## 使用
 
-### 登录
-
 ```go
 package main
 
@@ -13,7 +11,21 @@ import  icity "github.com/WingLim/icity-sdk"
 
 func main() {
 	user := icity.Login("username", "password")
+	user.NewDiary("", "Todoy~", icity.Public)
 }
+```
+
+## API
+
+### 登陆/登出
+1. 登陆
+```go
+Login(username, password string, saveCookies bool) *User
+```
+
+2. 登出
+```go
+Logout(user *User) error
 ```
 
 ### 日记
@@ -40,48 +52,50 @@ type Diary struct {
 
 #### 日记权限
 ```go
-// 公开
-icity.Public
-// 仅好友
-icity.OnlyFriend
-// 私密
-icity.Private
+const (
+    // 公开
+    Public DiaryPrivacy = iota + 1
+    // 仅好友
+    OnlyFriend
+    // 私密
+    Private
+)
 ```
 
 1. 发布日记
 ```go
-resp := user.NewDiary("title", "content", icity.Public)
+user.NewDiary(title, content string, privacy DiaryPrivacy) Response
 
 // 发布状态
-resp.Success
+Response.Success
 
 // 发布的日记的 ID
-resp.ActivityToken
+Response.ActivityToken
 ```
 
 2. 删除日记
 ```go
-resp := user.DeleteDiary("diaryID")
+user.DeleteDiary(diaryID string) Response
 
 // 删除状态
-resp.Success
+Response.Success
 
 // 删除的日记的 ID
-resp.ActivityToken
+Response.ActivityToken
 ```
 
 3. 喜欢日记
 ```go
 // true: 成功
 // false: 失败
-ok := user.Like("diaryID")
+user.Like(diaryID string) bool
 ```
 
 4. 取消喜欢
 ```go
 // true: 成功
-// false: 失败
-ok := user.UnLike("diaryID")
+// false: 失败 
+user.UnLike(diaryID string) bool
 ```
 
 ### 评论
@@ -101,40 +115,40 @@ type Comment struct {
 
 1. 发布评论
 ```go
-resp := user.NewComment("diaryID", "Some comments")
+user.NewComment(diaryID, comment string) Response
 
 // 发布状态
-resp.Success
+Response.Success
 
 // 发布的评论的 ID
-resp.ActivityToken
+Response.ActivityToken
 ```
 
 2. 删除评论
 ```go
-resp := user.DeleteComment("commentID", "diaryID")
+user.DeleteComment(commentID, diaryID string) Response
 
 // 删除状态
-resp.Success
+Response.Success
 
 // 删除的评论的 ID
-resp.ActivityToken
+Response.ActivityToken
 ```
 
 3. 回复评论
 ```go
-resp := user.ReplyComment("userID", "diaryID", "Some comments")
+user.ReplyComment(userID, diaryID, comment string) Response
 
 // 发布状态
-resp.Success
+Response.Success
 
 // 发布的评论的 ID
-resp.ActivityToken
+Response.ActivityToken
 ```
 
 4. 获取评论
 ```go
-comments := user.GetComments("diaryID")
+user.GetComments(diaryID string) []Comment
 ```
 
 ### 用户
@@ -159,26 +173,35 @@ type User struct {
 
 1. 设置昵称
 ```go
-SetNickName(nickname string)
+// true: 成功
+// false: 失败 
+user.SetNickName(nickname string) bool
 ```
 
 2. 设置简介
 ```go
-SetBio(bio string)
+// true: 成功
+// false: 失败 
+user.SetBio(bio string) bool
 ```
 
 3. 设置所在地
 ```go
-SetLocation(location string)
+// true: 成功
+// false: 失败 
+user.SetLocation(location string) bool
 ```
 
 ### 社交账号
 1. 微博
 ```go
-SetSocialWeibo(weibo string)
+// true: 成功
+// false: 失败 
+user.SetSocialWeibo(weibo string) bool
 ```
-更多社交账号设置请看 [settings_social.go](https://github.com/WingLim/icity-sdk/blob/main/settings_social.go)
 ...
+
+更多社交账号设置请看 [settings_social.go](https://github.com/WingLim/icity-sdk/blob/main/settings_social.go)
 
 ### 隐私设置
 
