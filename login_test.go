@@ -8,7 +8,7 @@ import (
 )
 
 func login() *User {
-	return Login(myUsername, myPassword, true)
+	return LoginWithConfig("config.json", true)
 }
 
 func TestUser_GetLoginToken(t *testing.T) {
@@ -33,6 +33,14 @@ func TestLogin(t *testing.T) {
 	resp, err := user.get(path.World)
 	assert.Nil(t, err)
 	assert.Equal(t, resp.StatusCode, http.StatusOK)
+	assert.NotNil(t, user)
+	assert.NotZero(t, user.UserID)
+}
+
+func TestLoginWithConfig(t *testing.T) {
+	filepath := "config.json"
+
+	user := LoginWithConfig(filepath, false)
 	assert.NotNil(t, user)
 	assert.NotZero(t, user.UserID)
 }

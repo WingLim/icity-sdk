@@ -150,6 +150,15 @@ func Login(username, password string, saveCookies bool) *User {
 	return user
 }
 
+func LoginWithConfig(filepath string, saveCookies bool) *User {
+	config, err := readConfig(filepath)
+	if err != nil {
+		log.Error(err)
+		return nil
+	}
+	return Login(config.Username, config.Password, saveCookies)
+}
+
 // Logout logouts user from iCity
 func Logout(user *User) error {
 	err := user.logout()
