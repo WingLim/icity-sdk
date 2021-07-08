@@ -6,7 +6,6 @@ import (
 	"io"
 	"log"
 	"net/url"
-	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -76,20 +75,6 @@ func (user *User) ReplyComment(userId, diaryId, comment string) Response {
 	comment = fmt.Sprintf("@%s %s", userId, comment)
 
 	return user.NewComment(diaryId, comment)
-}
-
-func parseComment(s *goquery.Selection) Comment {
-	comment := Comment{}
-
-	user := s.Find(selector.DiaryNickname).Text()
-	nameArr := strings.Split(user, "@")
-	comment.Nickname = nameArr[0]
-	comment.UserId = nameArr[1]
-	comment.Content = s.Find(selector.DiaryContent).Text()
-	date, _ := s.Find(selector.CommentDate).Attr("datetime")
-	comment.Date, _ = time.Parse("2006-01-02T15:04:05Z", date)
-
-	return comment
 }
 
 // GetComments gets diary comments by diary id.
