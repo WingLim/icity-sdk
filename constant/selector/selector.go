@@ -43,4 +43,7 @@ const (
 	ConversationItemUser        = "span.user"
 	ConversationItemLastMessage = "div.line"
 	ConversationItemLastDate    = "time.timeago"
+
+	Conversations       = "ul.messages-list li"
+	ConversationContent = "div.box"
 )
