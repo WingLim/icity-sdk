@@ -1,8 +1,9 @@
 package icity_sdk
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestUser_SetPrivacy(t *testing.T) {
