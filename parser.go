@@ -41,3 +41,19 @@ func parseComment(s *goquery.Selection) Comment {
 
 	return comment
 }
+
+func parseConversationItem(s *goquery.Selection) ConversationItem {
+	href, _ := s.Find(selector.ConversationItemID).Attr("href")
+	hrefArr := strings.Split(href, "/")
+
+	item := ConversationItem{
+		ID:          hrefArr[3],
+		Nickname:    s.Find(selector.ConversationItemUser).Text(),
+		LastMessage: s.Find(selector.ConversationItemLastMessage).Nodes[0].LastChild.Data,
+	}
+
+	lastDate, _ := s.Find(selector.ConversationItemLastDate).Attr("datetime")
+	item.LastDate, _ = time.Parse(timeLayout, lastDate)
+
+	return item
+}

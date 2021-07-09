@@ -34,3 +34,7 @@ const (
 	Social        = "/settings/user/social"
 	Privacy       = "/settings/user/privacy"
 )
+
+const (
+	Conversations = "/user/conversations"
+)
