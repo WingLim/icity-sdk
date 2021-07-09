@@ -23,3 +23,10 @@ func TestUser_Unfollow(t *testing.T) {
 	ok := user.Unfollow(userId)
 	assert.True(t, ok)
 }
+
+func TestUser_GetMyDiaries(t *testing.T) {
+	user := login()
+
+	diaries := user.GetMyDiaries()
+	assert.NotZero(t, diaries)
+}

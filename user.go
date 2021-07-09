@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/PuerkitoBio/goquery"
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
 	"github.com/WingLim/icity-sdk/log"
@@ -146,4 +147,24 @@ func (user *User) getUserSettingsPrivacy() error {
 	}
 
 	return nil
+}
+
+func (user *User) GetMyDiaries() []Diary {
+	urlPath := fmt.Sprintf(path.MyHome, user.UserID)
+
+	doc, err := user.getWithDoc(urlPath)
+	if err != nil {
+		log.Error(err)
+		return nil
+	}
+
+	var diaries []Diary
+	doc.Find(selector.MyDiaries).Each(func(i int, s *goquery.Selection) {
+		diary := parseDiary(s, false)
+		diary.Nickname = user.Nickname
+		diary.UserID = user.UserID
+		diaries = append(diaries, diary)
+	})
+
+	return diaries
 }

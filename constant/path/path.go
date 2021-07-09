@@ -7,6 +7,7 @@ const (
 	Login   = "/users/sign_in"
 	Logout  = "/users/sign_out"
 	World   = "/world"
+	MyHome  = "/u/%s"
 )
 
 const (

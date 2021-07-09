@@ -7,8 +7,10 @@ const (
 	DiaryTitle    = "div.line > h4 > a"
 	DiaryContent  = "div.comment"
 	DiaryLocation = "span.location"
-	DiaryDate     = "time.timeago"
+	DiaryDate     = "a.timeago time"
 
 	Comments    = "div.cntr > div > div.cntr > ul > li.wu"
 	CommentDate = "time.hours"
+
+	MyDiaries = "ul.posts-list li.diary"
 )
