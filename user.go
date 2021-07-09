@@ -149,9 +149,7 @@ func (user *User) getUserSettingsPrivacy() error {
 	return nil
 }
 
-func (user *User) GetMyDiaries() []Diary {
-	urlPath := fmt.Sprintf(path.MyHome, user.UserID)
-
+func doMyDiaries(user *User, urlPath string) []Diary {
 	doc, err := user.getWithDoc(urlPath)
 	if err != nil {
 		log.Error(err)
@@ -166,5 +164,29 @@ func (user *User) GetMyDiaries() []Diary {
 		diaries = append(diaries, diary)
 	})
 
+	return diaries
+}
+
+// GetMyDiaries gets my index page diaries.
+func (user *User) GetMyDiaries() []Diary {
+	urlPath := fmt.Sprintf(path.MyHome, user.UserID)
+
+	return doMyDiaries(user, urlPath)
+}
+
+func (user *User) GetMyAllDiaries() []Diary {
+	page := 1
+
+	var diaries []Diary
+	for {
+		urlPath := fmt.Sprintf(path.MyDiariesPage, user.UserID, page)
+
+		data := doMyDiaries(user, urlPath)
+		if len(data) == 0 {
+			break
+		}
+		diaries = append(diaries, data...)
+		page++
+	}
 	return diaries
 }

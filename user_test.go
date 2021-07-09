@@ -30,3 +30,10 @@ func TestUser_GetMyDiaries(t *testing.T) {
 	diaries := user.GetMyDiaries()
 	assert.NotZero(t, diaries)
 }
+
+func TestUser_GetMyAllDiaries(t *testing.T) {
+	user := login()
+
+	diaries := user.GetMyAllDiaries()
+	assert.NotZero(t, diaries)
+}
