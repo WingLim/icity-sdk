@@ -57,3 +57,17 @@ func parseConversationItem(s *goquery.Selection) ConversationItem {
 
 	return item
 }
+
+func parseConversation(s *goquery.Selection) Message {
+	msg := Message{
+		Content:   s.Find(selector.ConversationContent).Text(),
+		Timestamp: s.AttrOr("data-sort-by", ""),
+	}
+	if s.HasClass("me") {
+		msg.Type = TypeMe
+	} else {
+		msg.Type = TypeTa
+	}
+
+	return msg
+}

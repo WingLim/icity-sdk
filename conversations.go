@@ -1,10 +1,13 @@
 package icity_sdk
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
-	"time"
+	"github.com/WingLim/icity-sdk/log"
 )
 
 type ConversationItem struct {
@@ -14,9 +17,23 @@ type ConversationItem struct {
 	LastDate    time.Time
 }
 
+type MessageType string
+
+const (
+	TypeMe MessageType = "Me"
+	TypeTa MessageType = "Ta"
+)
+
+type Message struct {
+	Type      MessageType
+	Content   string
+	Timestamp string
+}
+
 func (user *User) GetConversationsList() []ConversationItem {
 	doc, err := user.getWithDoc(path.Conversations)
 	if err != nil {
+		log.Error(err)
 		return nil
 	}
 
@@ -28,8 +45,20 @@ func (user *User) GetConversationsList() []ConversationItem {
 	return list
 }
 
-func (user *User) GetConversations() {
+func (user *User) GetConversation(conversationID string) []Message {
+	urlPath := fmt.Sprintf(path.Conversation, conversationID)
+	doc, err := user.getWithDoc(urlPath)
+	if err != nil {
+		log.Error(err)
+		return nil
+	}
 
+	var conversation []Message
+	doc.Find(selector.Conversations).Each(func(i int, s *goquery.Selection) {
+		conversation = append(conversation, parseConversation(s))
+	})
+
+	return conversation
 }
 
 func (user *User) GetMoreConversations() {
