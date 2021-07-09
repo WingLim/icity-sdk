@@ -1,10 +1,14 @@
 package icity_sdk
 
 import (
+	"encoding/json"
 	"fmt"
+	"io"
+	"net/url"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/WingLim/icity-sdk/constant/data"
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
 	"github.com/WingLim/icity-sdk/log"
@@ -63,4 +67,32 @@ func (user *User) GetConversation(conversationID string) []Message {
 
 func (user *User) GetMoreConversations() {
 
+}
+
+func (user *User) SendMessage(conversationID, content string) bool {
+	urlPath := fmt.Sprintf(path.SendMessage, conversationID)
+	postData := url.Values{}
+	postData.Set(data.Content, content)
+
+	headers := generateHeaders(user)
+	resp, err := user.postForm(urlPath, postData, headers...)
+	if err != nil {
+		log.Error(err)
+		return false
+	}
+	defer closeBody(resp.Body)
+
+	res, err := io.ReadAll(resp.Body)
+	if err != nil {
+		log.Error(err)
+		return false
+	}
+
+	var statusResp Response
+	err = json.Unmarshal(res, &statusResp)
+	if statusResp.Success {
+		return true
+	}
+
+	return false
 }
