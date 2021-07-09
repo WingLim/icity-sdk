@@ -149,7 +149,7 @@ func (user *User) getUserSettingsPrivacy() error {
 	return nil
 }
 
-func doMyDiaries(user *User, urlPath string) []Diary {
+func doGetDiaries(user *User, urlPath string) []Diary {
 	doc, err := user.getWithDoc(urlPath)
 	if err != nil {
 		log.Error(err)
@@ -167,21 +167,22 @@ func doMyDiaries(user *User, urlPath string) []Diary {
 	return diaries
 }
 
-// GetMyDiaries gets my index page diaries.
-func (user *User) GetMyDiaries() []Diary {
-	urlPath := fmt.Sprintf(path.MyHome, user.UserID)
+// GetUserDiaries gets user index page diaries.
+func (user *User) GetUserDiaries(userID string) []Diary {
+	urlPath := fmt.Sprintf(path.UserHome, userID)
 
-	return doMyDiaries(user, urlPath)
+	return doGetDiaries(user, urlPath)
 }
 
-func (user *User) GetMyAllDiaries() []Diary {
+// GetUserAllDiaries gets user all diaries.
+func (user *User) GetUserAllDiaries(userID string) []Diary {
 	page := 1
 
 	var diaries []Diary
 	for {
-		urlPath := fmt.Sprintf(path.MyDiariesPage, user.UserID, page)
+		urlPath := fmt.Sprintf(path.UserDiariesPage, userID, page)
 
-		data := doMyDiaries(user, urlPath)
+		data := doGetDiaries(user, urlPath)
 		if len(data) == 0 {
 			break
 		}
@@ -189,4 +190,14 @@ func (user *User) GetMyAllDiaries() []Diary {
 		page++
 	}
 	return diaries
+}
+
+// GetMyDiaries gets my index page diaries.
+func (user *User) GetMyDiaries() []Diary {
+	return user.GetUserDiaries(user.UserID)
+}
+
+// GetMyAllDiaries gets my all diaries.
+func (user *User) GetMyAllDiaries() []Diary {
+	return user.GetUserAllDiaries(user.UserID)
 }
