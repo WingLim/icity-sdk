@@ -153,6 +153,7 @@ func Login(username, password string, opts ...Option) *User {
 	return user
 }
 
+// LoginWithConfig login iCity by config file.
 func LoginWithConfig(filepath string, opts ...Option) *User {
 	config, err := ReadConfig(filepath)
 	if err != nil {
@@ -162,6 +163,7 @@ func LoginWithConfig(filepath string, opts ...Option) *User {
 	return Login(config.Username, config.Password, opts...)
 }
 
+// LoginWithCookies login iCity by cookies file.
 func LoginWithCookies(filepath string) *User {
 	return Login("", "", WithSaveCookies(filepath))
 }

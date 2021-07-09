@@ -17,9 +17,11 @@ type Device struct {
 	Hardware string
 	LastUsed time.Time
 
+	// RemoveLink is the link to remove device.
 	RemoveLink string
 }
 
+// GetDevices gets devices we have login iCity.
 func (user *User) GetDevices() []Device {
 	doc, err := user.getWithDoc(path.Devices)
 	if err != nil {
@@ -34,6 +36,7 @@ func (user *User) GetDevices() []Device {
 	return devices
 }
 
+// RemoveDevice removes one device.
 func (user *User) RemoveDevice(device Device) bool {
 	urlPath := device.RemoveLink
 

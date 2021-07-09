@@ -14,6 +14,7 @@ import (
 	"github.com/WingLim/icity-sdk/log"
 )
 
+// ConversationItem defines every conversation in the conversation list.
 type ConversationItem struct {
 	ID          string
 	Nickname    string
@@ -21,24 +22,32 @@ type ConversationItem struct {
 	LastDate    time.Time
 }
 
+// MessageType defines who send the message.
 type MessageType string
 
 const (
+	// TypeMe means message send by myself.
 	TypeMe MessageType = "Me"
+	// TypeTa means message send by others.
 	TypeTa MessageType = "Ta"
 )
 
+// Conversation defines one conversation and the messages.
 type Conversation struct {
-	Messages     []Message
+	// Messages includes the message in the conversation.
+	Messages []Message
+	// MoreMessages is a link to get more message in the conversation.
 	MoreMessages string
 }
 
+// Message defines the message in the conversation.
 type Message struct {
 	Type      MessageType
 	Content   string
 	Timestamp string
 }
 
+// GetConversationsList gets all conversations we have started.
 func (user *User) GetConversationsList() []ConversationItem {
 	doc, err := user.getWithDoc(path.Conversations)
 	if err != nil {
@@ -54,6 +63,7 @@ func (user *User) GetConversationsList() []ConversationItem {
 	return list
 }
 
+// GetConversation gets one conversation details.
 func (user *User) GetConversation(conversationID string) *Conversation {
 	urlPath := fmt.Sprintf(path.Conversation, conversationID)
 	doc, err := user.getWithDoc(urlPath)
@@ -72,6 +82,7 @@ func (user *User) GetConversation(conversationID string) *Conversation {
 	return conversation
 }
 
+// GetMoreMessages gets more messages in the conversation.
 func (user *User) GetMoreMessages(conversation *Conversation) *Conversation {
 	urlPath := conversation.MoreMessages
 	if urlPath == "" {
@@ -94,6 +105,7 @@ func (user *User) GetMoreMessages(conversation *Conversation) *Conversation {
 	return conversation
 }
 
+// SendMessage sends a message in the conversation by conversation id.
 func (user *User) SendMessage(conversationID, content string) bool {
 	urlPath := fmt.Sprintf(path.SendMessage, conversationID)
 	postData := url.Values{}

@@ -7,6 +7,7 @@ import (
 	"github.com/WingLim/icity-sdk/log"
 )
 
+// GetWorld gets world diaries.
 func (user *User) GetWorld() []Diary {
 	doc, err := user.getWithDoc(path.World)
 	if err != nil {

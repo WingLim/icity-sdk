@@ -10,6 +10,7 @@ type Config struct {
 	Password string `json:"password"`
 }
 
+// ReadConfig reads config from file.
 func ReadConfig(filepath string) (config Config, err error) {
 	f, err := os.Open(filepath)
 	if err != nil {
@@ -26,6 +27,7 @@ func ReadConfig(filepath string) (config Config, err error) {
 	return config, nil
 }
 
+// WriteConfig writes config to file.
 func WriteConfig(config *Config, filepath string) (err error) {
 	f, err := os.Create(filepath)
 	if err != nil {
