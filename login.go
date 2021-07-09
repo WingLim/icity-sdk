@@ -162,6 +162,10 @@ func LoginWithConfig(filepath string, opts ...Option) *User {
 	return Login(config.Username, config.Password, opts...)
 }
 
+func LoginWithCookies(filepath string) *User {
+	return Login("", "", WithSaveCookies(filepath))
+}
+
 // Logout logouts user from iCity
 func Logout(user *User) error {
 	err := user.logout()

@@ -42,6 +42,14 @@ func TestLoginWithConfig(t *testing.T) {
 	assert.NotZero(t, user.UserID)
 }
 
+func TestLoginWithCookies(t *testing.T) {
+	filepath := "cookies.json"
+
+	user := LoginWithCookies(filepath)
+	assert.NotNil(t, user)
+	assert.NotZero(t, user.UserID)
+}
+
 func TestLogout(t *testing.T) {
 	user := login()
 
