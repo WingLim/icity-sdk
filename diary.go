@@ -16,7 +16,7 @@ import (
 type Diary struct {
 	ID       string
 	Nickname string
-	UserId   string
+	UserID   string
 
 	Title    string
 	Content  string

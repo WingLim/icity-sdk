@@ -18,7 +18,7 @@ func parseDiary(s *goquery.Selection) Diary {
 	user := s.Find(selector.DiaryNickname).Text()
 	nameArr := strings.Split(user, "@")
 	diary.Nickname = nameArr[0]
-	diary.UserId = nameArr[1]
+	diary.UserID = nameArr[1]
 	diary.Title = s.Find(selector.DiaryTitle).Text()
 	diary.Content = s.Find(selector.DiaryContent).Text()
 	diary.Location = s.Find(selector.DiaryLocation).Text()
