@@ -28,6 +28,11 @@ const (
 	TypeTa MessageType = "Ta"
 )
 
+type Conversation struct {
+	Messages     []Message
+	MoreMessages string
+}
+
 type Message struct {
 	Type      MessageType
 	Content   string
@@ -49,7 +54,7 @@ func (user *User) GetConversationsList() []ConversationItem {
 	return list
 }
 
-func (user *User) GetConversation(conversationID string) []Message {
+func (user *User) GetConversation(conversationID string) *Conversation {
 	urlPath := fmt.Sprintf(path.Conversation, conversationID)
 	doc, err := user.getWithDoc(urlPath)
 	if err != nil {
@@ -57,16 +62,36 @@ func (user *User) GetConversation(conversationID string) []Message {
 		return nil
 	}
 
-	var conversation []Message
+	conversation := &Conversation{
+		MoreMessages: doc.Find(selector.MoreMessages).AttrOr("href", ""),
+	}
 	doc.Find(selector.Conversations).Each(func(i int, s *goquery.Selection) {
-		conversation = append(conversation, parseConversation(s))
+		conversation.Messages = append(conversation.Messages, parseConversation(s))
 	})
 
 	return conversation
 }
 
-func (user *User) GetMoreConversations() {
+func (user *User) GetMoreMessages(conversation *Conversation) *Conversation {
+	urlPath := conversation.MoreMessages
+	if urlPath == "" {
+		return conversation
+	}
 
+	doc, err := user.getWithDoc(urlPath)
+	if err != nil {
+		log.Error(err)
+		return conversation
+	}
+
+	conversation.MoreMessages = doc.Find(selector.MoreMessages).AttrOr("href", "")
+	var moreMessages []Message
+	doc.Find(selector.Conversations).Each(func(i int, s *goquery.Selection) {
+		moreMessages = append(moreMessages, parseConversation(s))
+	})
+	moreMessages = append(moreMessages, conversation.Messages...)
+	conversation.Messages = moreMessages
+	return conversation
 }
 
 func (user *User) SendMessage(conversationID, content string) bool {
