@@ -21,7 +21,18 @@ func TestUser_GetConversation(t *testing.T) {
 	list := user.GetConversationsList()
 
 	conversation := user.GetConversation(list[0].ID)
-	assert.NotZero(t, conversation)
+	assert.NotZero(t, conversation.Messages)
+}
+
+func TestUser_GetMoreMessages(t *testing.T) {
+	user := login()
+
+	conversationID := "vmo5lz5"
+	conversation := user.GetConversation(conversationID)
+
+	newConversation := user.GetMoreMessages(conversation)
+
+	assert.NotEqual(t, len(conversation.Messages), len(newConversation.Messages))
 }
 
 func TestUser_SendMessage(t *testing.T) {
