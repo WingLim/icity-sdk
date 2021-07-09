@@ -36,3 +36,11 @@ const (
 	SettingsAllowLike      = "#user_settings_privacy_allow_like" + optionSelected
 	SettingsAllowMessage   = "#user_settings_privacy_allow_message" + optionSelected
 )
+
+const (
+	ConversationsList           = "ul.conversations-list li"
+	ConversationItemID          = "li > a"
+	ConversationItemUser        = "span.user"
+	ConversationItemLastMessage = "div.line"
+	ConversationItemLastDate    = "time.timeago"
+)
