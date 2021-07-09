@@ -18,7 +18,7 @@ type Response struct {
 	Success bool `json:"success"`
 
 	// ActivityToken is the id of diary.
-	ActivityToken string `json:"activity_token"`
+	ActivityToken string `json:"activity_token,omitempty"`
 }
 
 const userAgent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"

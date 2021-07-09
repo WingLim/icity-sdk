@@ -23,3 +23,12 @@ func TestUser_GetConversation(t *testing.T) {
 	conversation := user.GetConversation(list[0].ID)
 	assert.NotZero(t, conversation)
 }
+
+func TestUser_SendMessage(t *testing.T) {
+	user := login()
+
+	conversationID := "2i94bn2"
+
+	ok := user.SendMessage(conversationID, "hi hi~")
+	assert.True(t, ok)
+}
