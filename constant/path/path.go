@@ -9,6 +9,8 @@ const (
 	World           = "/world"
 	UserHome        = "/u/%s"
 	UserDiariesPage = "/u/%s/posts?page=%d"
+
+	SetPassword = "/settings/user/password"
 )
 
 const (

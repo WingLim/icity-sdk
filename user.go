@@ -3,10 +3,12 @@ package icity_sdk
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/WingLim/icity-sdk/constant/data"
 	"github.com/WingLim/icity-sdk/constant/path"
 	"github.com/WingLim/icity-sdk/constant/selector"
 	"github.com/WingLim/icity-sdk/log"
@@ -200,4 +202,25 @@ func (user *User) GetMyDiaries() []Diary {
 // GetMyAllDiaries gets my all diaries.
 func (user *User) GetMyAllDiaries() []Diary {
 	return user.GetUserAllDiaries(user.UserID)
+}
+
+// ChangePassword changes my password.
+func (user *User) ChangePassword(currentPassword, newPassword, confirmPassword string) bool {
+	postData := url.Values{}
+	postData.Set(data.MethodKEY, "put")
+	postData.Set(data.CurrentPassword, currentPassword)
+	postData.Set(data.ResetPassword, newPassword)
+	postData.Set(data.PasswordConfirmation, confirmPassword)
+
+	resp, err := user.postForm(path.SetPassword, postData)
+	if err != nil {
+		log.Error(err)
+		return false
+	}
+
+	if resp.StatusCode == http.StatusOK {
+		return true
+	}
+
+	return false
 }

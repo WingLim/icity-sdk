@@ -43,3 +43,9 @@ const (
 	AllowLike      = "user[settings][privacy_allow_like]"
 	AllowMessage   = "user[settings][privacy_allow_message]"
 )
+
+const (
+	CurrentPassword      = "user[current_password]"
+	ResetPassword        = "user[password]"
+	PasswordConfirmation = "user[password_confirmation]"
+)

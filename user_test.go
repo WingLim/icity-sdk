@@ -37,3 +37,10 @@ func TestUser_GetMyAllDiaries(t *testing.T) {
 	diaries := user.GetMyAllDiaries()
 	assert.NotZero(t, diaries)
 }
+
+func TestUser_ChangePassword(t *testing.T) {
+	user := login()
+
+	ok := user.ChangePassword(user.Password, "mypassword", "mypassword")
+	assert.True(t, ok)
+}
