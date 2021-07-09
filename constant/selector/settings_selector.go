@@ -11,4 +11,10 @@ const (
 	SettingsAllowComment   = "#user_settings_privacy_allow_comment" + optionSelected
 	SettingsAllowLike      = "#user_settings_privacy_allow_like" + optionSelected
 	SettingsAllowMessage   = "#user_settings_privacy_allow_message" + optionSelected
+
+	Devices          = "table tbody tr"
+	DeviceApp        = "td:nth-child(1)"
+	DeviceHardware   = "td:nth-child(1) > small"
+	DeviceLastUsed   = "td:nth-child(2) > small"
+	DeviceRemoveLink = "td:nth-child(3) > a"
 )

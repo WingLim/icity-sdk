@@ -8,7 +8,10 @@ import (
 	"github.com/WingLim/icity-sdk/constant/selector"
 )
 
-const timeLayout = "2006-01-02T15:04:05Z"
+const (
+	timeLayout           = "2006-01-02T15:04:05Z"
+	deviceLastUsedLayout = "2006-01-02 15:04:05 -0700"
+)
 
 func parseDiary(s *goquery.Selection, world bool) Diary {
 	diary := Diary{}
@@ -72,4 +75,15 @@ func parseConversation(s *goquery.Selection) Message {
 	}
 
 	return msg
+}
+
+func parseDevice(s *goquery.Selection) Device {
+	device := Device{
+		App:        s.Find(selector.DeviceApp).Text()[0:12],
+		Hardware:   s.Find(selector.DeviceHardware).Text(),
+		RemoveLink: s.Find(selector.DeviceRemoveLink).AttrOr("href", ""),
+	}
+	date := s.Find(selector.DeviceLastUsed).Text()
+	device.LastUsed, _ = time.Parse(deviceLastUsedLayout, date)
+	return device
 }
