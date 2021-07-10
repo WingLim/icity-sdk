@@ -25,7 +25,7 @@ func parseDiary(s *goquery.Selection, world bool) Diary {
 		diary.UserID = nameArr[1]
 	}
 	diary.Title = s.Find(selector.DiaryTitle).Text()
-	diary.Content = s.Find(selector.DiaryContent).Text()
+	diary.Content, _ = s.Find(selector.DiaryContent).Html()
 	diary.Location = s.Find(selector.DiaryLocation).Text()
 	date, _ := s.Find(selector.DiaryDate).Attr("datetime")
 	diary.Date, _ = time.Parse(timeLayout, date)
