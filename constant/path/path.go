@@ -7,6 +7,7 @@ const (
 	Login           = "/users/sign_in"
 	Logout          = "/users/sign_out"
 	World           = "/world"
+	Friends         = "/friends"
 	UserHome        = "/u/%s"
 	UserDiariesPage = "/u/%s/posts?page=%d"
 
