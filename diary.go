@@ -19,6 +19,7 @@ type Diary struct {
 	UserID   string
 
 	Title    string
+	Photos   []string
 	Content  string
 	Location string
 	Date     time.Time

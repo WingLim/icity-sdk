@@ -5,6 +5,7 @@ const (
 	DiaryId       = "a.timeago"
 	DiaryNickname = "a.user"
 	DiaryTitle    = "div.line > h4 > a"
+	DiaryPhotos   = "div.photos a img"
 	DiaryContent  = "div.comment"
 	DiaryLocation = "span.location"
 	DiaryDate     = "a.timeago time"

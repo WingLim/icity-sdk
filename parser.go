@@ -25,6 +25,10 @@ func parseDiary(s *goquery.Selection, world bool) Diary {
 		diary.UserID = nameArr[1]
 	}
 	diary.Title = s.Find(selector.DiaryTitle).Text()
+	var photos []string
+	s.Find(selector.DiaryPhotos).Each(func(i int, s *goquery.Selection) {
+		photos = append(photos, s.AttrOr("src", ""))
+	})
 	diary.Content, _ = s.Find(selector.DiaryContent).Html()
 	diary.Location = s.Find(selector.DiaryLocation).Text()
 	date, _ := s.Find(selector.DiaryDate).Attr("datetime")
