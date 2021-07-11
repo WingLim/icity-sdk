@@ -10,7 +10,7 @@ func TestUser_SetNickName(t *testing.T) {
 	user := login()
 
 	nickname := "大猪猪"
-	ok := user.SetNickName(nickname)
+	ok := user.SetMyNickName(nickname)
 	assert.True(t, ok)
 }
 

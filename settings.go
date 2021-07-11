@@ -39,8 +39,8 @@ func (user *User) doInfoSettings(settings ...Setting) bool {
 	return false
 }
 
-// SetNickName sets user nickname.
-func (user *User) SetNickName(nickname string) bool {
+// SetMyNickName sets user nickname.
+func (user *User) SetMyNickName(nickname string) bool {
 	set := Setting{
 		Key:   data.NicknameKey,
 		Value: nickname,
@@ -48,8 +48,8 @@ func (user *User) SetNickName(nickname string) bool {
 	return user.doInfoSettings(set)
 }
 
-// SetBio sets user bio.
-func (user *User) SetBio(bio string) bool {
+// SetMyBio sets user bio.
+func (user *User) SetMyBio(bio string) bool {
 	set := Setting{
 		Key:   data.BioKey,
 		Value: bio,
@@ -57,8 +57,8 @@ func (user *User) SetBio(bio string) bool {
 	return user.doInfoSettings(set)
 }
 
-// SetLocation sets user location.
-func (user *User) SetLocation(location string) bool {
+// SetMyLocation sets user location.
+func (user *User) SetMyLocation(location string) bool {
 	set := Setting{
 		Key:   data.LocationKey,
 		Value: location,
